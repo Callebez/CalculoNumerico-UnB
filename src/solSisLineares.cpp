@@ -1,7 +1,5 @@
 #include"solSisLineares.hpp"
 
-#define dabs(x) x>0?x:-x
-
 void quadrado(double& x, double& resultado)
 {
     resultado = x*x;
@@ -34,10 +32,10 @@ void newtonRaphson(void(*funcao)(double&, double&), double condicaoInicial,
 
     // Chute inicial
     double auxValorFuncao;
-    funcao(auxCondInicial, condicaoInicial);
+    funcao(auxCondInicial, auxValorFuncao);
 
     long long unsigned int i = 0;
-    while(i < maxIteracoes && condicaoInicial >= precisaoDaRaiz)
+    while(i < maxIteracoes && fabs(auxValorFuncao) >= precisaoDaRaiz)
     {
         derivada(funcao, condicaoInicial, precisaoDerivada, resultadoDerivada);
 
@@ -56,8 +54,13 @@ void newtonRaphson(void(*funcao)(double&, double&), double condicaoInicial,
 
         funcao(condicaoInicial,auxValorFuncao);
         condicaoInicial = condicaoInicial - auxValorFuncao/resultadoDerivada;
+
+        funcao(condicaoInicial, auxValorFuncao);
         i++;
     }
+
+    // Resetar a precisão
+    std::cout.precision(precisao_padrao);
 
     std::cout<<"partindo do ponto inicial x = "<<auxCondInicial<< "\n";
     std::cout<<"foram feitas " <<i<<" iteracoes"<<"\n";
@@ -83,12 +86,16 @@ void pontoFixo(void (*funcao)(double&, double&), double condicaoInicial,
     double auxValorFuncao, auxPrecisao, auxCondInicial = condicaoInicial;
     uint i = 0;
     while( (i < maxIteracoes)  & !(std::abs(auxPrecisao - condicaoInicial) < raizDaPrecisao*raizDaPrecisao) )
-        {
-            auxPrecisao = condicaoInicial;
-            funcao(condicaoInicial, auxValorFuncao);
-            condicaoInicial = auxValorFuncao ;
-            i++;
-        }
+    {
+        auxPrecisao = condicaoInicial;
+        funcao(condicaoInicial, auxValorFuncao);
+        condicaoInicial = auxValorFuncao ;
+        i++;
+    }
+
+    // Resetar a precisão
+    std::cout.precision(precisao_padrao);
+    
     resultado = condicaoInicial;
     std::cout<<"partindo do ponto inicial x = "<<auxCondInicial<< "\n";
     std::cout<<"foram feitas " <<i<<" iteracoes"<<"\n";
@@ -98,4 +105,74 @@ void pontoFixo(void (*funcao)(double&, double&), double condicaoInicial,
 
     resultado = condicaoInicial;
     std::cout<<"a raiz encontrada foi: "<<std::fixed<<resultado<<std::endl;
+}
+
+// Método da Posição Falsa [ Definido para  R -> R ]
+// Para convergência é necessário que em um intervalo [x0, x1], é necessário que f(x0).f(x1) < 0 (Teorema de Bolzano).
+// Fórmula do Método: xn = x1 - f(x1)(x1 - x0)/(f(x1) - f(x0)) => (A diferença para o método da secante é o fato deste utilizar dois pontos).
+// Fontes: https://en.wikipedia.org/wiki/Regula_falsi
+//         https://pt.wikipedia.org/wiki/M%C3%A9todo_da_posi%C3%A7%C3%A3o_falsa
+
+void posicaoFalsa(void(*funcao)(double&, double&), double condicaoInicial_0, double condicaoInicial_1, 
+    long long unsigned int maxIteracoes, double precisao, double& resultado)
+{
+    if(condicaoInicial_0 * condicaoInicial_1 >= 0)
+    {
+        std::cout<<"[ERRO] Condicoes iniciais erroneas.\n";
+        resultado =  INFINITY;
+        return;
+    }
+
+    // Garantir que x0 < x1, no intervalor [x0, x1]
+    if(condicaoInicial_0 > condicaoInicial_1)
+    {
+        double aux = condicaoInicial_0;
+        condicaoInicial_0 = condicaoInicial_1;
+        condicaoInicial_1 = aux;
+    }
+
+    double condicaoAtual=condicaoInicial_1;
+    double condicao_0 = condicaoInicial_0, condicao_1 = condicaoInicial_1;
+    double resultado_0, resultado_1;
+    
+    double valorFuncao;
+    funcao(condicaoAtual, valorFuncao);
+
+    long long unsigned int i=0;
+    while(i < maxIteracoes && fabs(valorFuncao)>precisao)
+    {
+        if(condicao_1 - condicao_0 == 0)
+        {
+            std::cout << "[ERRO] No intervalo [a,b], a = b.\n";
+            condicaoAtual = INFINITY;
+            break;
+        }
+
+        funcao(condicao_0, resultado_0);
+        funcao(condicao_1, resultado_1);
+
+        condicaoAtual = condicao_1-resultado_1*(condicao_1-condicao_0)/(resultado_1-resultado_0);
+        funcao(condicaoAtual, valorFuncao);
+
+        if(valorFuncao*resultado_0<0)
+            condicao_1 = condicaoAtual;
+        else
+            condicao_0 = condicaoAtual;
+
+        i++;
+    }
+
+    // Resetar a precisão
+    std::cout.precision(precisao_padrao);
+
+    std::cout<<"\n| METODO DA POSICAO FALSA |\n";
+    std::cout<<"Equacao: xn = x1 - f(x1)(x1 - x0)/(f(x1) - f(x0))\n";
+    std::cout<<"Condicoes Iniciais: x0 = "<<condicaoInicial_0<<", x1 = "<<condicaoInicial_1<<"\n";
+    std::cout<<"Iteracoes Feitas: "<<i<<"\n";
+    std::cout<<"Precisao: "<<precisao<<"\n";
+
+    std::cout.precision(-log(precisao));
+    std::cout<<"Raiz encontrada: "<<condicaoAtual<<"\n\n";
+
+    resultado = condicaoAtual;
 }
