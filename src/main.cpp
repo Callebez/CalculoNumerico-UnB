@@ -4,7 +4,7 @@
 
 void cubo(double& x, double& res)
 {
-    res = x*x*x-4;
+    res = x*x*x-84;
 }
 
 int main()
@@ -16,6 +16,18 @@ int main()
     newtonRaphson(cubo, 1.5, 100, 1e-20, resultado);
     posicaoFalsa(cubo, -20, 20, 900000, 1e-20, resultado);
     bissecao(cubo, -20, 20, 200000, 1e-20, resultado);
+
+    //>>>>> Descobrindo Intervalo onde pode haver raiz
+    double min, max;
+    bolzano(cubo, min, max);
+
+    double y1,y2;
+    cubo(min,y1);
+    cubo(max,y2);
+
+    std::cout.precision(precisao_padrao);
+    std::cout<<"Utilizando o Teorema de Bolzano:\n";
+    std::cout<<"("<<min<<","<<y1<<") e ("<<max<<","<<y2<<")\n";
 
     return 0;
 }

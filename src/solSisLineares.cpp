@@ -5,6 +5,78 @@ void quadrado(double& x, double& resultado)
     resultado = x*x;
 }
 
+void bolzano(void(*funcao)(double&,double&), double& minIntervalo, double& maxIntervalo,
+long long unsigned int maxIteracoes, double passo)
+{
+    // !!! Possui instabilidades => Deverá ser feita uma analise mais aprofundada.
+    // Aplica Teorema de bolzano para determinar um intervalo onde pode existir raiz.
+    // minIntervalo e maxIntervalo armazenam os valores mínimo e máximo do intervalo.
+
+    // Parte da busca irá ocorrer para x positivo e outra negativo, alternando entre os dois.
+
+    bool encontrouPositivo = false, encontrouNegativo = false; // Sinais Encontrados
+    long long unsigned int iteracoesRestantes = maxIteracoes;
+    long long unsigned int subIteracoes = maxIteracoes/10;
+    long long unsigned int i=0;
+
+    double xNeg=-passo,xPos=passo;
+    double yResultante;
+
+    while(iteracoesRestantes>0)
+    {
+        // Busca na parte dos positivos
+        i = 0;
+        while(i<subIteracoes && !(encontrouPositivo && encontrouNegativo))
+        {
+            funcao(xPos, yResultante);
+            if(yResultante>0 && !encontrouPositivo)
+            {
+                encontrouPositivo = true;
+                maxIntervalo = xPos;
+            }
+            else if(yResultante < 0 && !encontrouNegativo)
+            {
+                encontrouNegativo = true;
+                minIntervalo = xPos;
+            }
+
+            xPos+= passo;
+            i++;
+        }
+
+        if(encontrouPositivo && encontrouNegativo) break;
+
+        // Busca na parte dos Negativos
+        i = 0;
+        while(i<subIteracoes && !(encontrouPositivo && encontrouNegativo))
+        {
+            funcao(xNeg, yResultante);
+            if(yResultante>0 && !encontrouPositivo)
+            {
+                encontrouPositivo = true;
+                maxIntervalo = xNeg;
+            }
+            else if(yResultante < 0 && !encontrouNegativo)
+            {
+                encontrouNegativo = true;
+                minIntervalo = xNeg;
+            }
+
+            xNeg-= passo;
+            i++;
+        }
+
+        iteracoesRestantes -= 2*subIteracoes;
+    }
+
+    if(minIntervalo > maxIntervalo)
+    {
+        double aux = minIntervalo;
+        minIntervalo = maxIntervalo;
+        maxIntervalo = aux;
+    }
+}
+
 // Para derivadas de R^n -> R
 // Fórmula da derivada (f(x+h)-f(x-h))/(2*h) (https://en.wikipedia.org/wiki/Numerical_differentiation)
 // Erro cai com h^2 (é proporcional, mas não é igual) 

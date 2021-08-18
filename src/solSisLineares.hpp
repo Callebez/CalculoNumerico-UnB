@@ -22,3 +22,7 @@ void posicaoFalsa(void(*funcao)(double&, double&), double condicaoInicial_0, dou
     long long unsigned int maxIteracoes, double precisao, double& resultado);
 void bissecao(void(*funcao)(double&, double&), double inicioInter, double fimInter, long long unsigned int maxIteracoes,
 double precisao, double& resultado);
+
+// Teorema de Bolzano
+void bolzano(void(*funcao)(double&,double&), double& minIntervalo, double& maxIntervalo,
+long long unsigned int maxIteracoes = 1000, double passo = 1e-2);
