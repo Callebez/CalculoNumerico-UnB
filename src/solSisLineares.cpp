@@ -24,21 +24,21 @@ void derivada(void(*funcao)(double&, double&), double& ponto, double step, doubl
 // Fórmula para o método x_i+1 = x_i + f(x_i)/f'(x_i) (https://en.wikipedia.org/wiki/Newton%27s_method)
 // Erro caí com h^2  
 void newtonRaphson(void(*funcao)(double&, double&), double condicaoInicial,
-                   long long unsigned int maxIteracoes, double precisaoDaRaiz, double& resultado)
+                   uint maxIteracoes, double raizDaPrecisao, double& resultado)
 {
     double auxCondInicial = condicaoInicial;
     double resultadoDerivada;
-    double precisaoDerivada = 1e-10;
+    double auxPrecisao;
 
     // Chute inicial
     double auxValorFuncao;
     funcao(auxCondInicial, auxValorFuncao);
 
-    long long unsigned int i = 0;
-    while(i < maxIteracoes && fabs(auxValorFuncao) >= precisaoDaRaiz)
+    uint i = 0;
+    while( (i < maxIteracoes) & (fabs(auxValorFuncao-auxPrecisao) >= raizDaPrecisao*raizDaPrecisao))
     {
-        derivada(funcao, condicaoInicial, precisaoDerivada, resultadoDerivada);
-
+        derivada(funcao, condicaoInicial, raizDaPrecisao, resultadoDerivada);
+        auxPrecisao = auxValorFuncao;
         if(resultadoDerivada==0)
         {
             condicaoInicial = INFINITY;
@@ -64,10 +64,10 @@ void newtonRaphson(void(*funcao)(double&, double&), double condicaoInicial,
 
     std::cout<<"partindo do ponto inicial x = "<<auxCondInicial<< "\n";
     std::cout<<"foram feitas " <<i<<" iteracoes"<<"\n";
-    std::cout<<"com uma precisao de: "<<precisaoDaRaiz<<"\n";
+    std::cout<<"com uma precisao de: "<<raizDaPrecisao<<"\n";
 
     resultado = condicaoInicial;
-    std::cout.precision(-log10(precisaoDaRaiz));
+    std::cout.precision(std::abs(log10(raizDaPrecisao)));
     std::cout<<"a raiz encontrada foi: "<<resultado<<std::endl;
 
     // Alternativamente:
@@ -137,10 +137,11 @@ void posicaoFalsa(void(*funcao)(double&, double&), double condicaoInicial_0, dou
     
     double valorFuncao;
     funcao(condicaoAtual, valorFuncao);
-
+    double auxPrecisao;
     long long unsigned int i=0;
-    while(i < maxIteracoes && fabs(valorFuncao)>precisao)
+    while(i < maxIteracoes && fabs(valorFuncao-auxPrecisao)>precisao)
     {
+        auxPrecisao = valorFuncao;
         if(condicao_1 - condicao_0 == 0)
         {
             std::cout << "[ERRO] No intervalo [a,b], a = b.\n";
@@ -169,9 +170,9 @@ void posicaoFalsa(void(*funcao)(double&, double&), double condicaoInicial_0, dou
     std::cout<<"Equacao: xn = x1 - f(x1)(x1 - x0)/(f(x1) - f(x0))\n";
     std::cout<<"Condicoes Iniciais: x0 = "<<condicaoInicial_0<<", x1 = "<<condicaoInicial_1<<"\n";
     std::cout<<"Iteracoes Feitas: "<<i<<"\n";
-    std::cout<<"Precisao: "<<precisao<<"\n";
+    std::cout<<"Precisao: "<<fabs(valorFuncao-auxPrecisao)<<"\n";
 
-    std::cout.precision(-log(precisao));
+    std::cout.precision(fabs(log(fabs(valorFuncao-auxPrecisao))));
     std::cout<<"Raiz encontrada: "<<condicaoAtual<<"\n\n";
 
     resultado = condicaoAtual;
