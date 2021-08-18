@@ -95,7 +95,7 @@ void pontoFixo(void (*funcao)(double&, double&), double condicaoInicial,
 
     // Resetar a precisão
     std::cout.precision(precisao_padrao);
-    
+
     resultado = condicaoInicial;
     std::cout<<"partindo do ponto inicial x = "<<auxCondInicial<< "\n";
     std::cout<<"foram feitas " <<i<<" iteracoes"<<"\n";
@@ -116,7 +116,13 @@ void pontoFixo(void (*funcao)(double&, double&), double condicaoInicial,
 void posicaoFalsa(void(*funcao)(double&, double&), double condicaoInicial_0, double condicaoInicial_1, 
     long long unsigned int maxIteracoes, double precisao, double& resultado)
 {
-    if(condicaoInicial_0 * condicaoInicial_1 >= 0)
+    double condicao_0 = condicaoInicial_0, condicao_1 = condicaoInicial_1;
+    double resultado_0, resultado_1;
+
+    funcao(condicao_0, resultado_0);
+    funcao(condicao_1, resultado_1);
+
+    if(resultado_0 * resultado_1 >= 0)
     {
         std::cout<<"[ERRO] Condicoes iniciais erroneas.\n";
         resultado =  INFINITY;
@@ -124,7 +130,7 @@ void posicaoFalsa(void(*funcao)(double&, double&), double condicaoInicial_0, dou
     }
 
     // Garantir que x0 < x1, no intervalor [x0, x1]
-    if(condicaoInicial_0 > condicaoInicial_1)
+    if(resultado_0 > resultado_1)
     {
         double aux = condicaoInicial_0;
         condicaoInicial_0 = condicaoInicial_1;
@@ -132,8 +138,6 @@ void posicaoFalsa(void(*funcao)(double&, double&), double condicaoInicial_0, dou
     }
 
     double condicaoAtual=condicaoInicial_1;
-    double condicao_0 = condicaoInicial_0, condicao_1 = condicaoInicial_1;
-    double resultado_0, resultado_1;
     
     double valorFuncao;
     funcao(condicaoAtual, valorFuncao);
@@ -175,4 +179,58 @@ void posicaoFalsa(void(*funcao)(double&, double&), double condicaoInicial_0, dou
     std::cout<<"Raiz encontrada: "<<condicaoAtual<<"\n\n";
 
     resultado = condicaoAtual;
+}
+
+void bissecao(void(*funcao)(double&, double&), double inicioInter, double fimInter, long long unsigned int maxIteracoes,
+double precisao, double& resultado)
+{
+    double xMin=inicioInter;
+    double xMax=fimInter;
+    
+    double yMin, yMax;
+    funcao(xMin, yMin);
+    funcao(xMax, yMax);
+
+    if(yMin*yMax>0)
+    {
+        std::cout<<"[ERRO] Intervalo Invalido.\n";
+        resultado =  INFINITY;
+        return;
+    }
+
+    if(yMin>0)
+    {
+        double aux=xMin;
+        xMin = xMax;
+        xMax = aux;
+    }
+
+    double xMedio = xMax;
+    double yMedio;
+    funcao(xMedio, yMedio);
+
+    long long unsigned int i=0;
+    while(fabs(yMedio)>precisao && i < maxIteracoes)
+    {
+        if(yMedio*yMin<0)
+            xMax = xMedio;
+        else
+            xMin = xMedio;
+        xMedio = (xMin + xMax)/2.0;
+        funcao(xMedio,yMedio);
+        i++;
+    }
+
+    // Resetar a precisão
+    std::cout.precision(precisao_padrao);
+
+    std::cout<<"| METODO DA BISSECAO |\n";
+    std::cout<<"Equacao: xn = (x1+x2)/2\n";
+    std::cout<<"Iteracoes Feitas: "<<i<<"\n";
+    std::cout<<"Precisao: "<<precisao<<"\n";
+
+    std::cout.precision(-log(precisao));
+    std::cout<<"Raiz encontrada: "<<xMedio<<"\n\n";
+
+    resultado = xMedio;
 }
