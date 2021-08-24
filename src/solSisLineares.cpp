@@ -300,9 +300,9 @@ double precisao, double& resultado)
     std::cout<<"| METODO DA BISSECAO |\n";
     std::cout<<"Equacao: xn = (x1+x2)/2\n";
     std::cout<<"Iteracoes Feitas: "<<i<<"\n";
-    std::cout<<"Precisao: "<<precisao<<"\n";
+    std::cout<<"Precisao: "<<fabs(yMedio)<<"\n";
 
-    std::cout.precision(-log(precisao));
+    std::cout.precision(-log(fabs(yMedio)));
     std::cout<<"Raiz encontrada: "<<xMedio<<"\n\n";
 
     resultado = xMedio;
