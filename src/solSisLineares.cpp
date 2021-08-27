@@ -1,5 +1,9 @@
 #include"solSisLineares.hpp"
 
+//==========================================================================
+//|                   S O L U Ç Õ E S - A L G É B R I C A S                |
+//==========================================================================
+
 void quadrado(double& x, double& resultado)
 {
     resultado = x*x;
@@ -306,4 +310,37 @@ double precisao, double& resultado)
     std::cout<<"Raiz encontrada: "<<xMedio<<"\n\n";
 
     resultado = xMedio;
+}
+
+//==========================================================================
+//|             O P E R A Ç Õ E S - C O M - M A T R I Z E S                |
+//==========================================================================
+
+void trocaLinhas(Matriz &M, long long unsigned linha1, long long unsigned linha2)
+{
+    std::swap(M.elementos[linha1],M.elementos[linha2]);
+}
+
+std::vector<double> multiplicaLinhaEscalar(Matriz M, long long unsigned linha, double escalar)
+{
+    std::vector<double> resultante(M.colunas, 0);
+
+    long long unsigned i=0;
+    for(auto elemento:M.elementos[linha])
+    {
+        resultante[i]=elemento*escalar;
+        i++;
+    }
+
+    return resultante;
+}
+
+void subtrairLinhas(Matriz &M, long long unsigned linhaModificada, long long unsigned linhaAuxiliar, double escalarAuxiliar)
+{
+    std::vector<double> novaLinha = M.elementos[linhaModificada];
+    std::vector<double> novaLinhaAuxiliar = multiplicaLinhaEscalar(M,linhaAuxiliar,escalarAuxiliar);
+
+    for(long long unsigned i=0;i<M.colunas;++i)
+        novaLinha[i] = novaLinha[i]-novaLinhaAuxiliar[i];
+    M.elementos[linhaModificada] = novaLinha;
 }

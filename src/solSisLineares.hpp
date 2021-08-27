@@ -6,7 +6,13 @@
 #include <stdio.h>
 #include <iomanip>
 
+#include "Matriz.hpp"
+
 #pragma once
+
+//==========================================================================
+//|                   S O L U Ç Õ E S - A L G É B R I C A S                |
+//==========================================================================
 
 // Precisão padrão
 const std::streamsize precisao_padrao = std::cout.precision();
@@ -26,3 +32,11 @@ double precisao, double& resultado);
 // Teorema de Bolzano
 void bolzano(void(*funcao)(double&,double&), double& minIntervalo, double& maxIntervalo,
 long long unsigned int maxIteracoes = 1000, double passo = 1e-2);
+
+//==========================================================================
+//|             O P E R A Ç Õ E S - C O M - M A T R I Z E S                |
+//==========================================================================
+
+void trocaLinhas(Matriz &M, long long unsigned linha1, long long unsigned linha2);
+std::vector<double> multiplicaLinhaEscalar(Matriz M, long long unsigned linha, double escalar);
+void subtrairLinhas(Matriz &M, long long unsigned linhaModificada, long long unsigned linhaAuxiliar, double escalarAuxiliar);
