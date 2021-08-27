@@ -345,6 +345,21 @@ void subtrairLinhas(Matriz &M, long long unsigned linhaModificada, long long uns
     M.elementos[linhaModificada] = novaLinha;
 }
 
+void pivoteamentoParcial(Matriz &M, long long unsigned linhaPivoteada, long long unsigned colunaPivoteada)
+{
+    if(M.elementos[linhaPivoteada][colunaPivoteada]!=0)
+        return;
+    
+    for(long long unsigned i=linhaPivoteada+1;i<M.linhas;++i)
+    {
+        if(M.elementos[i][colunaPivoteada]!=0)
+        {
+            trocaLinhas(M,linhaPivoteada,i);
+            break;
+        }
+    }
+}
+
 void fatoraLU(Matriz M, Matriz &L, Matriz &U)
 {
     U=M;
@@ -352,8 +367,11 @@ void fatoraLU(Matriz M, Matriz &L, Matriz &U)
 
     for(long long unsigned i=0;i<U.linhas;++i)
     {
+        pivoteamentoParcial(U,i,i);
         for(long long unsigned j=i+1;j<U.colunas;++j)
         {
+            if(U.elementos[j][i]==0) continue;
+
             L.elementos[j][i]=U.elementos[j][i]/U.elementos[i][i];
             subtrairLinhas(U,j,i,U.elementos[j][i]/U.elementos[i][i]);
         }

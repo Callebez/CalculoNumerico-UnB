@@ -40,4 +40,5 @@ long long unsigned int maxIteracoes = 1000, double passo = 1e-2);
 void trocaLinhas(Matriz &M, long long unsigned linha1, long long unsigned linha2);
 std::vector<double> multiplicaLinhaEscalar(Matriz M, long long unsigned linha, double escalar);
 void subtrairLinhas(Matriz &M, long long unsigned linhaModificada, long long unsigned linhaAuxiliar, double escalarAuxiliar);
+void pivoteamentoParcial(Matriz &M, long long unsigned linhaPivoteada, long long unsigned colunaPivoteada);
 void fatoraLU(Matriz M, Matriz &L, Matriz &U);
