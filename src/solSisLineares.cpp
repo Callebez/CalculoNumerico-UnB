@@ -344,3 +344,18 @@ void subtrairLinhas(Matriz &M, long long unsigned linhaModificada, long long uns
         novaLinha[i] = novaLinha[i]-novaLinhaAuxiliar[i];
     M.elementos[linhaModificada] = novaLinha;
 }
+
+void fatoraLU(Matriz M, Matriz &L, Matriz &U)
+{
+    U=M;
+    Identidade(L, M.linhas);
+
+    for(long long unsigned i=0;i<U.linhas;++i)
+    {
+        for(long long unsigned j=i+1;j<U.colunas;++j)
+        {
+            L.elementos[j][i]=U.elementos[j][i]/U.elementos[i][i];
+            subtrairLinhas(U,j,i,U.elementos[j][i]/U.elementos[i][i]);
+        }
+    }
+}

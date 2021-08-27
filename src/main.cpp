@@ -5,16 +5,20 @@
 
 int main()
 {
-    Matriz m;
-    Identidade(m,3);
-    exibirMatriz(m);
-    
-    std::cout<<"\n";
-    exibirMatriz(m);
+    Matriz A;
+    criarMatriz(A,3,3);
 
-    subtrairLinhas(m,1,0,3);
+    A.elementos={
+        {1,1,1},
+        {2,1,-1},
+        {2,-1,1}};
+    
+    Matriz L,U;
+    fatoraLU(A,L,U);
+
+    exibirMatriz(L);
     std::cout<<"\n";
-    exibirMatriz(m);
+    exibirMatriz(U);
 
     return 0;
 }
