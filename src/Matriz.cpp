@@ -37,3 +37,10 @@ void exibirVetor(std::vector<double>& vec)
         std::cout<<i<<" ";
     std::cout<<"\n";
 }
+void normaVetor(std::vector<double>& vec, double& norma)
+{
+    norma = 0;
+    for(auto i : vec)
+        norma += vec[i]*vec[i]; 
+    norma = sqrt(norma);
+}

@@ -18,6 +18,7 @@ struct Matriz
 // Funções
 void criarMatriz(Matriz& matriz, long long unsigned n_linhas, long long unsigned n_colunas);
 void Identidade(Matriz& matriz, long long unsigned ordem);
+void normaVetor(std::vector<double>& vec, double& norma);
 
 void exibirMatriz(Matriz& matriz);
 void exibirVetor(std::vector<double>& vec);
