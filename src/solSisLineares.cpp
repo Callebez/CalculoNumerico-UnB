@@ -377,3 +377,29 @@ void fatoraLU(Matriz M, Matriz &L, Matriz &U)
         }
     }
 }
+void resolveLU(Matriz& L, Matriz& U, std::vector<double>& b,std::vector<double>& resultado)
+{
+    std::vector<double> y (L.linhas,0);
+    double soma = 0;
+    for(uint j = 0; j < y.size();j++)
+    {    
+        soma = 0;
+        for(uint i = 0; i < j; i++)
+        {
+            soma += L.elementos[j][i]*y[i];
+        }
+        y[j] = (b[j] - soma)/L.elementos[j][j];
+    }
+    
+    for(uint i = y.size()-1; i >0; i--)
+    {
+        soma = 0;
+        for(uint k = i; k < y.size(); k++)
+        {
+            soma -= U.elementos[i][k]*resultado[k];
+        }
+        resultado[i] = (y[i] + soma) / U.elementos[i][i] ;
+
+    }
+
+}

@@ -42,3 +42,4 @@ std::vector<double> multiplicaLinhaEscalar(Matriz M, long long unsigned linha, d
 void subtrairLinhas(Matriz &M, long long unsigned linhaModificada, long long unsigned linhaAuxiliar, double escalarAuxiliar);
 void pivoteamentoParcial(Matriz &M, long long unsigned linhaPivoteada, long long unsigned colunaPivoteada);
 void fatoraLU(Matriz M, Matriz &L, Matriz &U);
+void resolveLU(Matriz& L, Matriz& U, std::vector<double>& b,std::vector<double>& resultado);
