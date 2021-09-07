@@ -345,17 +345,31 @@ void subtrairLinhas(Matriz &M, long long unsigned linhaModificada, long long uns
     M.elementos[linhaModificada] = novaLinha;
 }
 
-void pivoteamentoParcial(Matriz &M, long long unsigned linhaPivoteada, long long unsigned colunaPivoteada)
+void pivoteamentoParcial(Matriz &L, Matriz &U, long long unsigned linhaPivoteada, long long unsigned colunaPivoteada)
 {
-    if(M.elementos[linhaPivoteada][colunaPivoteada]!=0)
+    if(U.elementos[linhaPivoteada][colunaPivoteada]!=0)
         return;
     
-    for(long long unsigned i=linhaPivoteada+1;i<M.linhas;++i)
+    long long unsigned linhaAux = linhaPivoteada;
+    for(long long unsigned i=linhaPivoteada+1;i<U.linhas;++i)
     {
-        if(M.elementos[i][colunaPivoteada]!=0)
+        if(U.elementos[i][colunaPivoteada]!=0)
         {
-            trocaLinhas(M,linhaPivoteada,i);
+            linhaAux = i;
+            trocaLinhas(U,linhaPivoteada,i);
             break;
+        }
+    }
+
+    // Mudança na Matriz L
+    if(linhaAux!=linhaPivoteada)
+    {
+        double aux;
+        for(long long unsigned j=0;j<colunaPivoteada;++j)
+        {
+            aux = L.elementos[linhaPivoteada][j];
+            L.elementos[linhaPivoteada][j] = L.elementos[linhaAux][j];
+            L.elementos[linhaAux][j] = aux;
         }
     }
 }
@@ -367,7 +381,7 @@ void fatoraLU(Matriz M, Matriz &L, Matriz &U)
 
     for(long long unsigned i=0;i<U.linhas;++i)
     {
-        pivoteamentoParcial(U,i,i);
+        pivoteamentoParcial(L,U,i,i);
         for(long long unsigned j=i+1;j<U.colunas;++j)
         {
             if(U.elementos[j][i]==0) continue;
