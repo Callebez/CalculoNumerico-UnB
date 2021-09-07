@@ -41,6 +41,6 @@ void normaVetor(std::vector<double>& vec, double& norma)
 {
     norma = 0;
     for(auto i : vec)
-        norma += vec[i]*vec[i]; 
+        norma += i*i; 
     norma = sqrt(norma);
 }
