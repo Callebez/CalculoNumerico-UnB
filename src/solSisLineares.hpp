@@ -43,3 +43,6 @@ void subtrairLinhas(Matriz &M, long long unsigned linhaModificada, long long uns
 void pivoteamentoParcial(Matriz &L, Matriz& U, Matriz& P, long long unsigned linhaPivoteada, long long unsigned colunaPivoteada);
 void fatoraLU(Matriz M, Matriz &L, Matriz &U, Matriz& P);
 void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vector<double>& resultado);
+void determinante(Matriz& A, double& det);
+void resolveSistema(Matriz& A, std::vector<double>& ladoDireito, std::vector<double> & solucao, double& det);
+

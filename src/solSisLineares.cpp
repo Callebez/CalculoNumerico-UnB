@@ -436,3 +436,33 @@ void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vect
     }
 
 }
+void determinante(Matriz& A, double& det)
+{
+    std::vector<double> b(A.linhas,0); 
+
+    Matriz L,U,P;
+    fatoraLU(A,L,U,P);
+    det = 1;
+    for(uint i = 0; i < U.linhas; i ++)
+    {
+        det *= U.elementos[i][i];
+    }
+ 
+}
+void resolveSistema(Matriz& A, std::vector<double>& ladoDireito, std::vector<double> & solucao, double& det)
+{
+    double deter;
+    determinante(A, deter);
+    if(deter==0)
+    {
+        std::cout<<"Sistema não tem solução!"<<"\n"; 
+        det = deter;
+    }
+    else
+    {
+        Matriz L,U,P;
+        fatoraLU(A,L,U,P);
+        resolveLU(L,U,P, ladoDireito, solucao); 
+        det = deter;
+    }
+}

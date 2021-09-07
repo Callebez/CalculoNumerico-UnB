@@ -15,20 +15,11 @@ int main()
         {-3,-5,6,1},
         {-1,2,8,-2}
     };
-    
-    Matriz L,U,P;
-    fatoraLU(A,L,U,P);
-
-
-    // exibirMatriz(L);
-    // std::cout<<std::endl;
-
-    // exibirMatriz(U);
-    // std::cout<<std::endl;
-
-    resolveLU(L,U,P, b, resultado); 
+    double det;
+    resolveSistema(A,b,resultado, det);
     exibirVetor(resultado);
-    std::cout<<std::endl;
+    std::cout<<"determinante: "<<det<<"\n";
+
 
     return 0;
 }
