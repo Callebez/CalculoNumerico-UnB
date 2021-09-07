@@ -46,3 +46,5 @@ void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vect
 void determinante(Matriz& A, double& det);
 void resolveSistema(Matriz& A, std::vector<double>& ladoDireito, std::vector<double> & solucao, double& det);
 void inversa(Matriz& A, Matriz& inversa);
+
+void verificarSol(Matriz& A, std::vector<double>& b, std::vector<double> solucao);

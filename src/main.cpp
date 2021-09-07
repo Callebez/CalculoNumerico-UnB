@@ -16,15 +16,24 @@ int main()
         {-1,2,8,-2}
     };
 
-    /*
+    // Cálculo da Solução
     double det;
     resolveSistema(A,b,resultado, det);
     exibirVetor(resultado);
-    std::cout<<"determinante: "<<det<<"\n";*/
 
+    std::cout<<"determinante: "<<det<<"\n";
+
+    verificarSol(A,b,resultado);
+    std::cout<<"\n";
+
+    // Cálculo da Inversa
     Matriz inv;
     inversa(A, inv);
 
+    Matriz ver;
+    multiplicaMatrizes(A,inv,ver);
+
+    exibirMatriz(ver);
 
     return 0;
 }

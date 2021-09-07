@@ -495,3 +495,13 @@ void inversa(Matriz& A, Matriz& inversa)
             inversa.elementos[i][j] = colunaSolucao[j][i];
     }
 }
+
+void verificarSol(Matriz& A, std::vector<double>& b, std::vector<double> solucao)
+{
+    std::vector<double> aux;
+    multiplicaVetorMatrix(A,solucao,aux);
+
+    std::cout<<"Comparações:\n";
+    for(long long unsigned i=0;i<A.linhas;++i)
+        std::cout<<"["<<i+1<<"] "<<aux[i]<<" <=> "<< b[i]<<"\n";
+}
