@@ -433,7 +433,7 @@ void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vect
     exibirMatriz(U);
     std::cout<<"\n";
     exibirVetor(y);
-    for(uint i = U.linhas-1; i >=0; i--)
+    for(int i = U.linhas-1; i >=0; i--)
     {
         soma = 0;
         std::cout<<"  " << i <<" \n";
