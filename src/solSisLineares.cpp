@@ -413,12 +413,7 @@ void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vect
     double soma = 0;
     std::vector<double> Pb; 
     multiplicaVetorMatrix(P,b,Pb);
-    // exibirMatriz(L);
-    // std::cout<<"\n";
-    // std::cout<<"\n";
-    // std::cout<<"\n";
 
-    // exibirVetor(Pb);
     for(uint j = 0; j < y.size();j++)
     {    
         soma = 0;
@@ -428,27 +423,16 @@ void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vect
         }
         y[j] = (Pb[j] - soma);
     }
-    // exibirVetor(y);
-    // std::cout<<std::endl;
-    exibirMatriz(U);
-    std::cout<<"\n";
-    exibirVetor(y);
+
     for(int i = U.linhas-1; i >=0; i--)
     {
         soma = 0;
-        std::cout<<"  " << i <<" \n";
 
         for(uint k = 1+i; k < U.colunas; k++)
         {
             soma += U.elementos[i][k]*resultado[k];
         }
-        // std::cout<<soma;
-
-        // std::cout<<"resultado: "<< (y[i] - soma) / U.elementos[i][i]<<"\n" ;
         resultado[i] = (y[i] - soma) / U.elementos[i][i] ;
     }
-
-    // std::cout<<"terminou loop";
-    // exibirVetor(y);
 
 }
