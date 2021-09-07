@@ -16,10 +16,7 @@ int main()
     
     Matriz L,U;
     fatoraLU(A,L,U);
-
-    // exibirMatriz(L);
-    // std::cout<<"\n";
-    // exibirMatriz(U);
+    
     resolveLU(L,U, b, resultado); 
     exibirVetor(resultado);
     return 0;
