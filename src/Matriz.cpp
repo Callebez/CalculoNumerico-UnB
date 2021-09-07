@@ -61,3 +61,19 @@ void multiplicaVetorMatrix(Matriz& A, std::vector<double>& vetor, std::vector<do
         resultante[i]= soma;
     }
 }
+
+void multiplicaMatrizes(Matriz& A, Matriz& B, Matriz& res)
+{
+    criarMatriz(res, A.linhas, B.colunas);
+
+    for(long long unsigned i=0;i<A.linhas;++i)
+    {
+        for(long long unsigned j=0;j<B.colunas;++j)
+        {
+            double soma=0;
+            for(long long unsigned k=0;k<A.colunas;++k)
+                soma += A.elementos[i][k]*B.elementos[k][j];
+            res.elementos[i][j]=soma;
+        }
+    }
+}

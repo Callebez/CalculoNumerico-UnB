@@ -427,7 +427,6 @@ void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vect
     for(int i = U.linhas-1; i >=0; i--)
     {
         soma = 0;
-
         for(uint k = 1+i; k < U.colunas; k++)
         {
             soma += U.elementos[i][k]*resultado[k];
@@ -464,5 +463,35 @@ void resolveSistema(Matriz& A, std::vector<double>& ladoDireito, std::vector<dou
         fatoraLU(A,L,U,P);
         resolveLU(L,U,P, ladoDireito, solucao); 
         det = deter;
+    }
+}
+
+void inversa(Matriz& A, Matriz& inversa)
+{
+    criarMatriz(inversa, A.linhas, A.colunas);
+
+    std::vector<double> colunaIdentidade[A.colunas];
+    std::vector<double> colunaSolucao[A.colunas];
+
+    for(long long unsigned j=0;j<A.colunas;++j)
+    {
+        std::vector<double> vecAux(A.linhas, 0);
+        
+        colunaSolucao[j] = vecAux;
+
+        vecAux[j] = 1;
+        colunaIdentidade[j] = vecAux;
+    }
+
+    // Descobrindo colunas da matriz inversa
+    double d;
+    for(long long unsigned j=0;j<A.colunas;++j)
+        resolveSistema(A, colunaIdentidade[j], colunaSolucao[j], d);
+
+    // Definindo elementos da matriz inversa
+    for(long long unsigned i=0;i<inversa.linhas;++i)
+    {
+        for(long long unsigned j=0;j<inversa.colunas;++j)
+            inversa.elementos[i][j] = colunaSolucao[j][i];
     }
 }

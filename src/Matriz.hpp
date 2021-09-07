@@ -20,7 +20,7 @@ void criarMatriz(Matriz& matriz, long long unsigned n_linhas, long long unsigned
 void Identidade(Matriz& matriz, long long unsigned ordem);
 void normaVetor(std::vector<double>& vec, double& norma);
 void multiplicaVetorMatrix(Matriz& A, std::vector<double>& vetor, std::vector<double>& resultante);
-
+void multiplicaMatrizes(Matriz& A, Matriz& B, Matriz& res);
 
 void exibirMatriz(Matriz& matriz);
 void exibirVetor(std::vector<double>& vec);

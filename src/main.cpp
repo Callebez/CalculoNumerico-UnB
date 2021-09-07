@@ -15,10 +15,15 @@ int main()
         {-3,-5,6,1},
         {-1,2,8,-2}
     };
+
+    /*
     double det;
     resolveSistema(A,b,resultado, det);
     exibirVetor(resultado);
-    std::cout<<"determinante: "<<det<<"\n";
+    std::cout<<"determinante: "<<det<<"\n";*/
+
+    Matriz inv;
+    inversa(A, inv);
 
 
     return 0;
