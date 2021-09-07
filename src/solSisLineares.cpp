@@ -385,18 +385,18 @@ void fatoraLU(Matriz M, Matriz &L, Matriz &U, Matriz& P)
     {
         pivoteamentoParcial(L,U,P,i,i);
 
-        std::cout<<"Matriz L:\n";
-        exibirMatriz(L);
-        std::cout<<"\n";
+//         std::cout<<"Matriz L:\n";
+//         exibirMatriz(L);
+//         std::cout<<"\n";
 
-        std::cout<<"Matriz: U\n";
-        exibirMatriz(U);
-        std::cout<<"\n";
-\
-        std::cout<<"Matriz: P\n";
-        exibirMatriz(P);
+//         std::cout<<"Matriz: U\n";
+//         exibirMatriz(U);
+//         std::cout<<"\n";
+// 
+//         std::cout<<"Matriz: P\n";
+//         exibirMatriz(P);
 
-        std::cout<<"==================\n";
+//         std::cout<<"==================\n";
 
         for(long long unsigned j=i+1;j<U.colunas;++j)
         {
@@ -411,6 +411,14 @@ void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vect
 {
     std::vector<double> y (L.linhas,0);
     double soma = 0;
+    std::vector<double> Pb; 
+    multiplicaVetorMatrix(P,b,Pb);
+    // exibirMatriz(L);
+    // std::cout<<"\n";
+    // std::cout<<"\n";
+    // std::cout<<"\n";
+
+    // exibirVetor(Pb);
     for(uint j = 0; j < y.size();j++)
     {    
         soma = 0;
@@ -418,20 +426,29 @@ void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vect
         {
             soma += L.elementos[j][i]*y[i];
         }
-        y[j] = (b[j] - soma)/L.elementos[j][j];
+        y[j] = (Pb[j] - soma);
     }
+    // exibirVetor(y);
+    // std::cout<<std::endl;
+    exibirMatriz(U);
+    std::cout<<"\n";
     exibirVetor(y);
-    std::cout<<std::endl;
-
-    for(uint i = y.size()-1; i >0; i--)
+    for(uint i = U.linhas-1; i >=0; i--)
     {
         soma = 0;
-        for(uint k = i; k < y.size(); k++)
-        {
-            soma -= U.elementos[i][k]*resultado[k];
-        }
-        resultado[i] = (y[i] + soma) / U.elementos[i][i] ;
+        std::cout<<"  " << i <<" \n";
 
+        for(uint k = 1+i; k < U.colunas; k++)
+        {
+            soma += U.elementos[i][k]*resultado[k];
+        }
+        // std::cout<<soma;
+
+        // std::cout<<"resultado: "<< (y[i] - soma) / U.elementos[i][i]<<"\n" ;
+        resultado[i] = (y[i] - soma) / U.elementos[i][i] ;
     }
+
+    // std::cout<<"terminou loop";
+    // exibirVetor(y);
 
 }

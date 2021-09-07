@@ -7,8 +7,8 @@ int main()
 {
     Matriz A;
     criarMatriz(A,4,4);
-    std::vector<double> b = {1,1,1};
-    std::vector<double> resultado (3,0);
+    std::vector<double> b = {1,1,1,1};
+    std::vector<double> resultado (4,0);
     A.elementos={
         {1,2,-1,0},
         {2,4,-2,-1},
@@ -19,15 +19,16 @@ int main()
     Matriz L,U,P;
     fatoraLU(A,L,U,P);
 
-    /*
-    exibirMatriz(L);
-    std::cout<<std::endl;
 
-    exibirMatriz(U);
-    std::cout<<std::endl;
+    // exibirMatriz(L);
+    // std::cout<<std::endl;
+
+    // exibirMatriz(U);
+    // std::cout<<std::endl;
+
     resolveLU(L,U,P, b, resultado); 
     exibirVetor(resultado);
-    std::cout<<std::endl;*/
+    std::cout<<std::endl;
 
     return 0;
 }

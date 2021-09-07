@@ -44,3 +44,20 @@ void normaVetor(std::vector<double>& vec, double& norma)
         norma += i*i; 
     norma = sqrt(norma);
 }
+void multiplicaVetorMatrix(Matriz& A, std::vector<double>& vetor, std::vector<double>& resultante)
+{
+    double soma = 0;
+    // std::cout<<"funcionando até aqui";
+
+    resultante.resize(A.linhas);
+    for(uint i = 0; i < A.linhas; i ++)
+    {
+        soma = 0;
+        for(uint j = 0; j < A.colunas; j++)
+        { 
+            soma += A.elementos[i][j]*vetor[j];
+        }
+        // std::cout<<soma<<"\n";
+        resultante[i]= soma;
+    }
+}
