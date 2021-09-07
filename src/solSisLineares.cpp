@@ -384,6 +384,20 @@ void fatoraLU(Matriz M, Matriz &L, Matriz &U, Matriz& P)
     for(long long unsigned i=0;i<U.linhas;++i)
     {
         pivoteamentoParcial(L,U,P,i,i);
+
+        std::cout<<"Matriz L:\n";
+        exibirMatriz(L);
+        std::cout<<"\n";
+
+        std::cout<<"Matriz: U\n";
+        exibirMatriz(U);
+        std::cout<<"\n";
+
+        std::cout<<"Matriz: P\n";
+        exibirMatriz(P);
+
+        std::cout<<"==================\n";
+
         for(long long unsigned j=i+1;j<U.colunas;++j)
         {
             if(U.elementos[j][i]==0) continue;
