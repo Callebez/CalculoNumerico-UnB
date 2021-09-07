@@ -19,11 +19,25 @@ int main()
     exibirMatriz(L);
     std::cout<<std::endl;
 
-    exibirMatriz(U);
+    exibirMatriz(P);
     std::cout<<std::endl;
     resolveLU(L,U,P, b, resultado); 
     exibirVetor(resultado);
     std::cout<<std::endl;
 
+    // Teste multiplicação
+
+
+    // Matriz A;
+    // criarMatriz(A,3,3);
+
+    // A.elementos={
+    //     {1,0,0},
+    //     {0,-5,0},
+    //     {0,0,10}};
+    // std::vector<double> vec = {5, 4 , 0.2};
+    // std::vector<double> res;
+    // multiplicaVetorMatrix(A,vec,res);
+    // exibirVetor(res);
     return 0;
 }
