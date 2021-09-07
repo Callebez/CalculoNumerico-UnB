@@ -392,7 +392,7 @@ void fatoraLU(Matriz M, Matriz &L, Matriz &U, Matriz& P)
         std::cout<<"Matriz: U\n";
         exibirMatriz(U);
         std::cout<<"\n";
-
+\
         std::cout<<"Matriz: P\n";
         exibirMatriz(P);
 
