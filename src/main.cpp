@@ -14,14 +14,14 @@ int main()
         {10,0,20},
         {5,0,-1}};
     
-    Matriz L,U;
-    fatoraLU(A,L,U);
+    Matriz L,U,P;
+    fatoraLU(A,L,U,P);
     exibirMatriz(L);
     std::cout<<std::endl;
 
     exibirMatriz(U);
     std::cout<<std::endl;
-    resolveLU(L,U, b, resultado); 
+    resolveLU(L,U,P, b, resultado); 
     exibirVetor(resultado);
     std::cout<<std::endl;
 

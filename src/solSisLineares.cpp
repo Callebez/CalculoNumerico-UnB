@@ -345,7 +345,7 @@ void subtrairLinhas(Matriz &M, long long unsigned linhaModificada, long long uns
     M.elementos[linhaModificada] = novaLinha;
 }
 
-void pivoteamentoParcial(Matriz &L, Matriz &U, long long unsigned linhaPivoteada, long long unsigned colunaPivoteada)
+void pivoteamentoParcial(Matriz &L, Matriz &U, Matriz& P, long long unsigned linhaPivoteada, long long unsigned colunaPivoteada)
 {
     if(U.elementos[linhaPivoteada][colunaPivoteada]!=0)
         return;
@@ -357,6 +357,7 @@ void pivoteamentoParcial(Matriz &L, Matriz &U, long long unsigned linhaPivoteada
         {
             linhaAux = i;
             trocaLinhas(U,linhaPivoteada,i);
+            trocaLinhas(P,linhaPivoteada,i);
             break;
         }
     }
@@ -374,14 +375,15 @@ void pivoteamentoParcial(Matriz &L, Matriz &U, long long unsigned linhaPivoteada
     }
 }
 
-void fatoraLU(Matriz M, Matriz &L, Matriz &U)
+void fatoraLU(Matriz M, Matriz &L, Matriz &U, Matriz& P)
 {
     U=M;
     Identidade(L, M.linhas);
+    Identidade(P, M.linhas);
 
     for(long long unsigned i=0;i<U.linhas;++i)
     {
-        pivoteamentoParcial(L,U,i,i);
+        pivoteamentoParcial(L,U,P,i,i);
         for(long long unsigned j=i+1;j<U.colunas;++j)
         {
             if(U.elementos[j][i]==0) continue;
@@ -391,7 +393,7 @@ void fatoraLU(Matriz M, Matriz &L, Matriz &U)
         }
     }
 }
-void resolveLU(Matriz& L, Matriz& U, std::vector<double>& b,std::vector<double>& resultado)
+void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vector<double>& resultado)
 {
     std::vector<double> y (L.linhas,0);
     double soma = 0;
