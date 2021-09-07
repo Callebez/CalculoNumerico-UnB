@@ -404,7 +404,9 @@ void resolveLU(Matriz& L, Matriz& U, std::vector<double>& b,std::vector<double>&
         }
         y[j] = (b[j] - soma)/L.elementos[j][j];
     }
-    
+    exibirVetor(y);
+    std::cout<<std::endl;
+
     for(uint i = y.size()-1; i >0; i--)
     {
         soma = 0;

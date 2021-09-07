@@ -7,17 +7,23 @@ int main()
 {
     Matriz A;
     criarMatriz(A,3,3);
-    std::vector<double> b = {1,6,4};
+    std::vector<double> b = {1,1,1};
     std::vector<double> resultado (3,0);
     A.elementos={
-        {1,1,1},
-        {4,3,-1},
-        {3,5,3}};
+        {1,-5,1},
+        {10,0,20},
+        {5,0,-1}};
     
     Matriz L,U;
     fatoraLU(A,L,U);
-    
+    exibirMatriz(L);
+    std::cout<<std::endl;
+
+    exibirMatriz(U);
+    std::cout<<std::endl;
     resolveLU(L,U, b, resultado); 
     exibirVetor(resultado);
+    std::cout<<std::endl;
+
     return 0;
 }
