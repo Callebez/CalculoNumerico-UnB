@@ -77,3 +77,27 @@ void multiplicaMatrizes(Matriz& A, Matriz& B, Matriz& res)
         }
     }
 }
+void substraiVetores(std::vector<double>& A, std::vector<double>& B, std::vector<double>& resultado)
+{
+    for(uint i = 0; i < A.size(); i++)
+    {
+        resultado[i] = A[i] - B[i]; 
+    }
+}
+// void multiplicarMatrizNumero(Matriz& matriz, double numero, Matriz& res)
+// {
+//     for(uint i = 0; i < matriz.linhas; i++)
+//     {
+//         for(uint j = 0; j < matriz.colunas; j++)
+//         {
+//             res[i][j] = numero*matriz[i][j];
+//         }
+//     }
+// }
+void multiplicarVetorNumero(std::vector<double>& vec, double numero, std::vector<double>& res)
+{
+    for(uint j = 0; j < vec.size(); j++)
+    {
+        res[j] = numero*vec[j];
+    }
+}

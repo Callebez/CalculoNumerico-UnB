@@ -46,5 +46,13 @@ void resolveLU(Matriz& L, Matriz& U, Matriz& P, std::vector<double>& b,std::vect
 void determinante(Matriz& A, double& det);
 void resolveSistema(Matriz& A, std::vector<double>& ladoDireito, std::vector<double> & solucao, double& det);
 void inversa(Matriz& A, Matriz& inversa);
+void jacobiano(void(*funcao)(std::vector<double>&,std::vector<double>&),
+                    std::vector<double>& ponto, double step,
+                    uint dimImagem, Matriz& jacobianoNoPonto);
+void lorenz(std::vector<double>& x, std::vector<double>&fx);
+void funcTeste(std::vector<double>& x,std::vector<double>& fx);
+
+void newtonRapshonSistemas(void(*funcao)(std::vector<double>&,std::vector<double>&),
+                           std::vector<double>& chuteInicial, double step, uint maxIteracoes);
 
 void verificarSol(Matriz& A, std::vector<double>& b, std::vector<double> solucao);

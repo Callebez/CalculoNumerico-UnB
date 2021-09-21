@@ -5,35 +5,46 @@
 
 int main()
 {
-    Matriz A;
-    criarMatriz(A,4,4);
-    std::vector<double> b = {1,1,1,1};
-    std::vector<double> resultado (4,0);
-    A.elementos={
-        {1,2,-1,0},
-        {2,4,-2,-1},
-        {-3,-5,6,1},
-        {-1,2,8,-2}
-    };
+    // std::cout<<"Salve\n";
 
-    // Cálculo da Solução
-    double det;
-    resolveSistema(A,b,resultado, det);
-    exibirVetor(resultado);
+    // Matriz matrix;
 
-    std::cout<<"determinante: "<<det<<"\n";
+    // criarMatriz(matrix,3,3);
+    std::vector<double> b = {1,1};
+    newtonRapshonSistemas(funcTeste,b,0.000001,10);
+    exibirVetor(b);
+    // exibirMatriz(matrix);
+    // for(int i = 0; i < 10; i++)
+    // {
+        // jacobiano(lorenz,b,0.01,3,matrix);
+    // }
+    // exibirMatriz(matrix);
+    // std::vector<double> resultado (4,0);
+    // A.elementos={
+    //     {1,2,-1,0},
+    //     {2,4,-2,-1},
+    //     {-3,-5,6,1},
+    //     {-1,2,8,-2}
+    // };
 
-    verificarSol(A,b,resultado);
-    std::cout<<"\n";
+    // // Cálculo da Solução
+    // double det;
+    // resolveSistema(A,b,resultado, det);
+    // exibirVetor(resultado);
 
-    // Cálculo da Inversa
-    Matriz inv;
-    inversa(A, inv);
+    // std::cout<<"determinante: "<<det<<"\n";
 
-    Matriz ver;
-    multiplicaMatrizes(A,inv,ver);
+    // verificarSol(A,b,resultado);
+    // std::cout<<"\n";
 
-    exibirMatriz(ver);
+    // // Cálculo da Inversa
+    // Matriz inv;
+    // inversa(A, inv);
+
+    // Matriz ver;
+    // multiplicaMatrizes(A,inv,ver);
+
+    // exibirMatriz(ver);
 
     return 0;
 }

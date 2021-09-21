@@ -24,3 +24,7 @@ void multiplicaMatrizes(Matriz& A, Matriz& B, Matriz& res);
 
 void exibirMatriz(Matriz& matriz);
 void exibirVetor(std::vector<double>& vec);
+void substraiVetores(std::vector<double>& A, std::vector<double>& B, std::vector<double>& resultado);
+void multiplicarMatrizNumero(Matriz& matriz, double numero, Matriz& res);
+void multiplicarVetorNumero(std::vector<double>& vec, double numero, std::vector<double>& res);
+

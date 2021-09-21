@@ -1,5 +1,6 @@
 #include"solSisLineares.hpp"
-
+#include "Matriz.hpp"
+#include<thread>
 //==========================================================================
 //|                   S O L U Ç Õ E S - A L G É B R I C A S                |
 //==========================================================================
@@ -80,7 +81,15 @@ long long unsigned int maxIteracoes, double passo)
         maxIntervalo = aux;
     }
 }
-
+void lorenz(std::vector<double>& x, std::vector<double>&fx)
+{
+    double sigma = 10.0;
+    double rho = 8.0/3.0;
+    double beta = 28.0;
+    fx[0] = (sigma*(x[1]-x[0]));
+    fx[1] = (x[0]*(rho - x[2]) - x[1]);
+    fx[2] = (x[0]*x[1] - beta*x[2]);
+}
 // Para derivadas de R^n -> R
 // Fórmula da derivada (f(x+h)-f(x-h))/(2*h) (https://en.wikipedia.org/wiki/Numerical_differentiation)
 // Erro cai com h^2 (é proporcional, mas não é igual) 
@@ -95,7 +104,78 @@ void derivada(void(*funcao)(double&, double&), double& ponto, double step, doubl
 
     derivadaNoPonto = (fMais -fMenos)/(2.0*step);
 }
+void jacobiano(void(*funcao)(std::vector<double>&,std::vector<double>&),
+                    std::vector<double>& ponto, double step,
+                    uint dimImagem, Matriz& jacobianoNoPonto)
+{
+    std::vector<double> auxValorMais(dimImagem); 
+    std::vector<double> auxValorMenos(dimImagem); 
+    
+    unsigned int dimDominio = ponto.size();
+    std::vector<double> auxMais = ponto;
+    std::vector<double> auxMenos = ponto; 
+    
+    // std::thread f1;
+    // std::thread f2;
 
+    for(uint j = 0; j < dimImagem; j++)
+    {
+        for(uint i = 0; i < dimDominio; i++)
+            {
+                // x_i +/- h
+                auxMais[i] += step;
+                auxMenos[i] -= step;
+                // (f(x1,x2, ... ,x_i+h,..., xn)-f(x1,x2, ... ,xi-h,..., xn))/(2*h)
+
+                // Essas threads fazem o programa rodar mais devagar, se souber resolver, fique a vontade
+
+                // std::thread f1(funcao,std::ref(auxMais),std::ref(auxValorMais));
+                // std::thread f2(funcao,std::ref(auxMenos),std::ref(auxValorMenos));
+                // f1.join();
+                // f2.join();
+
+                funcao(auxMais,auxValorMais);
+                funcao(auxMenos,auxValorMenos);
+                //J(i,j) = D_xi(f_j)
+              
+                jacobianoNoPonto.elementos[j][i] = (auxValorMais[j] - auxValorMenos[j])/(2*step);
+                
+                //desfaz x_i +/- h 
+                auxMais[i] -= step;
+                auxMenos[i] += step;
+            }        
+    }    
+}
+void funcTeste(std::vector<double>& x,std::vector<double>& fx)
+{
+    fx[0] = x[0]*x[0]/3.0  + x[1]*x[1] - 1.0;
+    fx[1] = x[0]*x[0]  + x[1]*x[1]/4.0 - 1.0;
+}
+void newtonRapshonSistemas(void(*funcao)(std::vector<double>&,std::vector<double>&),
+                           std::vector<double>& chuteInicial, double step, uint maxIteracoes)
+{
+    Matriz J;
+    criarMatriz(J,chuteInicial.size(),chuteInicial.size());
+    std::vector<double> aux(chuteInicial.size());
+    std::vector<double> F(chuteInicial.size());
+    Matriz Jinversa; 
+    std::vector<double> delta(chuteInicial.size());
+    double det;
+    for(uint i = 0; i < maxIteracoes; i++)
+    {
+        jacobiano(funcao, chuteInicial,step,chuteInicial.size(),J);
+        // inversa(J,Jinversa);
+        funcao(chuteInicial,F);
+        // multiplicarVetorNumero(F,-1.0,F);        
+        resolveSistema(J,F,delta,det);
+        
+        // exibirVetor(delta);
+        // std::cout<<" ";
+
+        // multiplicaVetorMatrix(Jinversa,F, aux);
+        substraiVetores(chuteInicial,delta,chuteInicial);
+    }
+}
 // Metodo de Newton Raphson para função bem comportada de R -> R 
 // Fórmula para o método x_i+1 = x_i + f(x_i)/f'(x_i) (https://en.wikipedia.org/wiki/Newton%27s_method)
 // Erro caí com h^2  

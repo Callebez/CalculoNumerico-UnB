@@ -2,7 +2,7 @@
 target 	:= main 
 objs 	:=  ./build/main.o ./build/solSisLineares.o ./build/Matriz.o
 CC 		:= g++
-CFLAGS 	:= -g -Wall -lm 
+CFLAGS 	:= -g -Wall -lm -pthread
 
 all: $(target)
 run: $(target)
