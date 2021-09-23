@@ -51,8 +51,16 @@ void jacobiano(void(*funcao)(std::vector<double>&,std::vector<double>&),
                     uint dimImagem, Matriz& jacobianoNoPonto);
 void lorenz(std::vector<double>& x, std::vector<double>&fx);
 void funcTeste(std::vector<double>& x,std::vector<double>& fx);
-
+void autoValorPotencia(Matriz& A, std::vector<double>& chuteInicial,
+                        uint maxIteracoes,double tol, double& erroFinal,
+                        double& maiorAutoValor);
 void newtonRapshonSistemas(void(*funcao)(std::vector<double>&,std::vector<double>&),
                            std::vector<double>& chuteInicial, double step, uint maxIteracoes);
 
 void verificarSol(Matriz& A, std::vector<double>& b, std::vector<double> solucao);
+void decompoiscaoLDU(Matriz& A, Matriz& L,Matriz& D,Matriz& U);
+void criarMatrizIteracaoGaussSidel(Matriz& A, std::vector<double>& b, 
+                                   Matriz&matrizIteracao, std::vector<double>& vetorIteracao);
+void gaussSidel(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInicial,
+                std::vector<double>& resultado);
+

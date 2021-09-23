@@ -44,6 +44,23 @@ void normaVetor(std::vector<double>& vec, double& norma)
         norma += i*i; 
     norma = sqrt(norma);
 }
+void normalizarVetor(std::vector<double>& vec, std::vector<double>& res)
+{
+    double norma;
+    normaVetor(vec,norma);
+    for(uint i = 0; i < vec.size(); i++)
+    {
+        res[i] = vec[i]/norma;
+    }
+}
+void produtoInterno(std::vector<double>& vecA,std::vector<double>& vecB, double& resultado)
+{
+    resultado = 0;
+    for(uint i = 0; i < vecA.size(); i ++)
+    {
+        resultado += vecA[i]*vecB[i];
+    }
+}
 void multiplicaVetorMatrix(Matriz& A, std::vector<double>& vetor, std::vector<double>& resultante)
 {
     double soma = 0;
@@ -84,16 +101,35 @@ void substraiVetores(std::vector<double>& A, std::vector<double>& B, std::vector
         resultado[i] = A[i] - B[i]; 
     }
 }
-// void multiplicarMatrizNumero(Matriz& matriz, double numero, Matriz& res)
-// {
-//     for(uint i = 0; i < matriz.linhas; i++)
-//     {
-//         for(uint j = 0; j < matriz.colunas; j++)
-//         {
-//             res[i][j] = numero*matriz[i][j];
-//         }
-//     }
-// }
+void somaVetores(std::vector<double>& A, std::vector<double>& B, std::vector<double>& resultado)
+{
+    for(uint i = 0; i < A.size(); i++)
+    {
+        resultado[i] = A[i] + B[i]; 
+    }
+}
+void somaMatrizes(Matriz& A, Matriz& B, Matriz& resultado)
+{
+    criarMatriz(resultado, A.linhas,A.colunas);
+    for(uint i = 0; i < A.linhas; i++)
+    {
+        for(uint j = 0; j < A.colunas; j++)
+        {
+            resultado.elementos[i][j] = A.elementos[i][j] + B.elementos[i][j];
+        }
+    }
+}
+void multiplicarMatrizNumero(Matriz& matriz, double numero, Matriz& res)
+{
+    criarMatriz(res,matriz.linhas,matriz.colunas);
+    for(uint i = 0; i < matriz.linhas; i++)
+    {
+        for(uint j = 0; j < matriz.colunas; j++)
+        {
+            res.elementos[i][j] = numero*matriz.elementos[i][j];
+        }
+    }
+}
 void multiplicarVetorNumero(std::vector<double>& vec, double numero, std::vector<double>& res)
 {
     for(uint j = 0; j < vec.size(); j++)

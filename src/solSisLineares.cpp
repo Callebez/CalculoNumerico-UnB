@@ -585,3 +585,80 @@ void verificarSol(Matriz& A, std::vector<double>& b, std::vector<double> solucao
     for(long long unsigned i=0;i<A.linhas;++i)
         std::cout<<"["<<i+1<<"] "<<aux[i]<<" <=> "<< b[i]<<"\n";
 }
+void autoValorPotencia(Matriz& A, std::vector<double>& chuteInicial,
+                        uint maxIteracoes,double tol, double& erroFinal,
+                        double& maiorAutoValor)
+{
+    double erro=1.0;
+    std::vector<double>erroAux(chuteInicial.size());
+    uint i = 0;
+    std::vector<double> aux (chuteInicial.size());
+    while((i<=maxIteracoes)&(erro>=tol))
+    {
+        multiplicaVetorMatrix(A,chuteInicial,aux);
+        produtoInterno(chuteInicial,aux,maiorAutoValor);
+        normalizarVetor(aux,aux);
+        substraiVetores(chuteInicial,aux, erroAux);
+        normaVetor(erroAux, erro);
+        i++;
+        chuteInicial = aux; 
+        erroFinal = erro;
+    }
+}
+void decompoiscaoLDU(Matriz& A, Matriz& L,Matriz& D,Matriz& U)
+{
+    criarMatriz(L, A.linhas, A.colunas);
+    criarMatriz(D, A.linhas, A.colunas);
+    criarMatriz(U, A.linhas, A.colunas);
+
+    for(uint i = 0; i < A.colunas; i++)
+    {   
+  
+        for(uint j = A.linhas-1; j > i; j--)
+        {
+            L.elementos[j][i] = A.elementos[j][i];
+        }
+        for(uint j = i; j < A.linhas; j--)
+        {
+            U.elementos[j][i] = A.elementos[j][i];
+        }
+        L.elementos[i][i] = 0.0;
+        U.elementos[i][i] = 0.0;
+
+        D.elementos[i][i] = A.elementos[i][i];
+    }
+}
+void criarMatrizIteracaoGaussSidel(Matriz& A, std::vector<double>& b, 
+                                   Matriz&matrizIteracao, std::vector<double>& vetorIteracao)
+{
+    Matriz L,D,U; 
+    Matriz Aux;
+    Matriz AuxMult;
+    Matriz Aux2; 
+    vetorIteracao.resize(b.size());
+
+    // Achar T_g
+
+    decompoiscaoLDU(A,L,D,U); 
+    somaMatrizes(L,D, matrizIteracao);
+    inversa(matrizIteracao,Aux);
+    multiplicaMatrizes(Aux,U,AuxMult);
+    multiplicarMatrizNumero(AuxMult,-1,Aux2);   
+    matrizIteracao = Aux2;
+    
+    //Achar C_g
+    multiplicaVetorMatrix(Aux,b,vetorIteracao);
+}
+void gaussSidel(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInicial,std::vector<double>& resultado)
+{
+    resultado.resize(b.size());
+    Matriz matrizIteracao;
+    std::vector<double> vetorIteracao;
+    criarMatrizIteracaoGaussSidel(A,b,matrizIteracao,vetorIteracao);
+    for(uint i = 0; i < 100; i++)
+    {
+        multiplicaVetorMatrix(matrizIteracao,chuteInicial,resultado);
+        somaVetores(resultado,vetorIteracao, resultado);
+        chuteInicial= resultado;
+    }
+}
