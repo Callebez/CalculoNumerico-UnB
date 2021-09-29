@@ -1,5 +1,6 @@
 #include"solSisLineares.hpp"
 #include "Matriz.hpp"
+#include <algorithm>
 #include<thread>
 //==========================================================================
 //|                   S O L U Ç Õ E S - A L G É B R I C A S                |
@@ -662,19 +663,33 @@ void gaussSidel(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInic
         chuteInicial= resultado;
     }
 }
-// void derivada(void(*funcao)(double&, double&), double& ponto, double step, double& derivadaNoPonto)
+
+void raioEspectral(Matriz& A, double& raio)
+{
+    std::vector<double> aux (A.colunas);
+    raio = 0;
+    for(uint i = 0; i < A.linhas; i++)
+    {
+        for(uint j = 0; j< A.colunas; j++)
+        {
+            aux[j] = std::fabs(A.elementos[i][j]); 
+        }
+        auto it = max_element(std::begin(aux), std::end(aux));
+        raio += *it;
+    }    
+}
 void extrapolacaoRichardsonDerivada(void(*funcao)(double&, double&), double& ponto,
                                     double step, double t, double& derivadaNoPonto)
 {
     double derivadaAux1;
     double derivadaAux2;
-    std::thread t1(derivada,std::ref(funcao),std::ref(ponto),step/t,std::ref(derivadaAux1));
-    std::thread t2(derivada,std::ref(funcao),std::ref(ponto),step,std::ref(derivadaAux2));
-    // derivada(funcao,ponto,step/t,derivadaAux1);
-    // derivada(funcao,ponto,step,derivadaAux2);
+    // std::thread t1(derivada,std::ref(funcao),std::ref(ponto),step/t,std::ref(derivadaAux1));
+    // std::thread t2(derivada,std::ref(funcao),std::ref(ponto),step,std::ref(derivadaAux2));
+    derivada(funcao,ponto,step/t,derivadaAux1);
+    derivada(funcao,ponto,step,derivadaAux2);
 
-    t1.join();
+    // t1.join();
     derivadaAux1*=pow(t,2);
-    t2.join();
+    // t2.join();
     derivadaNoPonto = (derivadaAux1 - derivadaAux2)/(pow(t,2)-1);
 }
