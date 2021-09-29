@@ -64,3 +64,5 @@ void criarMatrizIteracaoGaussSidel(Matriz& A, std::vector<double>& b,
 void gaussSidel(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInicial,
                 std::vector<double>& resultado);
 
+void extrapolacaoRichardsonDerivada(void(*funcao)(double&, double&), double& ponto,
+                                    double step, double t, double& derivadaNoPonto);

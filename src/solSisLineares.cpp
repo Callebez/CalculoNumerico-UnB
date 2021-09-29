@@ -662,3 +662,19 @@ void gaussSidel(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInic
         chuteInicial= resultado;
     }
 }
+// void derivada(void(*funcao)(double&, double&), double& ponto, double step, double& derivadaNoPonto)
+void extrapolacaoRichardsonDerivada(void(*funcao)(double&, double&), double& ponto,
+                                    double step, double t, double& derivadaNoPonto)
+{
+    double derivadaAux1;
+    double derivadaAux2;
+    std::thread t1(derivada,std::ref(funcao),std::ref(ponto),step/t,std::ref(derivadaAux1));
+    std::thread t2(derivada,std::ref(funcao),std::ref(ponto),step,std::ref(derivadaAux2));
+    // derivada(funcao,ponto,step/t,derivadaAux1);
+    // derivada(funcao,ponto,step,derivadaAux2);
+
+    t1.join();
+    derivadaAux1*=pow(t,2);
+    t2.join();
+    derivadaNoPonto = (derivadaAux1 - derivadaAux2)/(pow(t,2)-1);
+}
