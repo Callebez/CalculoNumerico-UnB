@@ -106,10 +106,11 @@ int main()
     // exibirMatriz(ver);*/
     
     std::vector<std::vector<double>> p;
-    p.push_back({2,1});
-    p.push_back({6,5});
-    p.push_back({3,6});
-    p.push_back({4.8,6});
+    p.push_back({0,-153});
+    p.push_back({0.25,64});
+    p.push_back({0.5,242});
+    p.push_back({0.75,284});
+    p.push_back({1,175});
 
     ajustePolinomial(2, p);
 
