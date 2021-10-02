@@ -1,5 +1,7 @@
 #include "solSisLineares.hpp"
 #include "Matriz.hpp"
+#include "aproxFuncoes.hpp"
+
 #include <iostream>
 #include <vector>
 void fun(double& x, double& res)
@@ -8,6 +10,7 @@ void fun(double& x, double& res)
 }
 int main()
 {
+    /*
     double Extra;
     double ponto = 1.0;
     double exato = -2.5;
@@ -100,7 +103,26 @@ int main()
     // Matriz ver;
     // multiplicaMatrizes(A,inv,ver);
 
-    // exibirMatriz(ver);
+    // exibirMatriz(ver);*/
+    /*
+    std::vector<std::vector<double>> p;
+    p.push_back({2,1});
+    p.push_back({6,5});
+    p.push_back({3,6});
+    p.push_back({4.8,6});
+
+    ajustePolinomial(2, p);*/
+
+    Matriz a;
+    a.linhas = 2;
+    a.colunas = 3;
+    a.elementos = {
+        {1,2,3},
+        {4,5,6}
+    };
+
+    Matriz r;
+    transporMatriz(a,r);
 
     return 0;
 }

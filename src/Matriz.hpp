@@ -33,3 +33,4 @@ void somaVetores(std::vector<double>& A, std::vector<double>& B, std::vector<dou
 void multiplicarMatrizNumero(Matriz& matriz, double numero, Matriz& res);
 void multiplicarVetorNumero(std::vector<double>& vec, double numero, std::vector<double>& res);
 
+void transporMatriz(Matriz& matriz, Matriz& res);

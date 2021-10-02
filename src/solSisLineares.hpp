@@ -5,6 +5,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <iomanip>
+#include <algorithm>
+#include<thread>
 
 #include "Matriz.hpp"
 
