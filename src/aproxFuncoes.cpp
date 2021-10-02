@@ -14,5 +14,15 @@ void ajustePolinomial(long long grau, std::vector<std::vector<double>> pontos)
         for(long long i=0;i<V.linhas;++i)
             V.elementos[i][j] = pow(pontos[i][0], j);
 
+    Matriz Vtrans;
+    transporMatriz(V, Vtrans);
+
+    Matriz M;
+    multiplicaMatrizes(V, Vtrans, M);
+
     exibirMatriz(V);
+    std::cout<<"\n";
+    exibirMatriz(Vtrans);
+    std::cout<<"\n";
+    exibirMatriz(M);
 }

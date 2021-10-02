@@ -104,15 +104,16 @@ int main()
     // multiplicaMatrizes(A,inv,ver);
 
     // exibirMatriz(ver);*/
-    /*
+    
     std::vector<std::vector<double>> p;
     p.push_back({2,1});
     p.push_back({6,5});
     p.push_back({3,6});
     p.push_back({4.8,6});
 
-    ajustePolinomial(2, p);*/
+    ajustePolinomial(2, p);
 
+    /*
     Matriz a;
     a.linhas = 2;
     a.colunas = 3;
@@ -122,7 +123,7 @@ int main()
     };
 
     Matriz r;
-    transporMatriz(a,r);
+    transporMatriz(a,r);*/
 
     return 0;
 }
