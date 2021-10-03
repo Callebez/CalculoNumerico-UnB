@@ -8,6 +8,17 @@ void fun(double& x, double& res)
 {
     res = sqrt(x)/pow(x,3.0);
 }
+
+double f1(double x)
+{
+    return sin(M_PI*x);
+}
+
+double f2(double x)
+{
+    return cos(M_PI*x);
+}
+
 int main()
 {
     /*
@@ -105,6 +116,7 @@ int main()
 
     // exibirMatriz(ver);*/
     
+    
     std::vector<std::vector<double>> p;
     p.push_back({0,-153});
     p.push_back({0.25,64});
@@ -112,7 +124,19 @@ int main()
     p.push_back({0.75,284});
     p.push_back({1,175});
 
-    ajustePolinomial(2, p);
+    /*
+    ajustePolinomial(2, p);*/
+
+    std::vector<double(*)(double)> funcs;
+    funcs.push_back(f1);
+    funcs.push_back(f2);
+    
+    std::vector<double> coeficientes;
+    ajusteLinearGeral(p,funcs,coeficientes);
+    exibirVetor(coeficientes);
+
+    ajustePolinomial(2, p, coeficientes);
+    exibirVetor(coeficientes);
 
     /*
     Matriz a;
