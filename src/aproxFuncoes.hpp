@@ -18,4 +18,4 @@ void ajusteLinearGeral(std::vector<std::vector<double>> pontos, std::vector<doub
 // que melhor se adequa aos pontos passados
 void ajustePolinomial(long long grau, std::vector<std::vector<double>> pontos, std::vector<double>& res);
 
-// (a,b), (c,d), (e,f), (g,h)
+void interpolPolinomial(std::vector<std::vector<double>> pontos, std::vector<double>& res);

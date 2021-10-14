@@ -116,39 +116,36 @@ int main()
 
     // exibirMatriz(ver);*/
     
-    
-    std::vector<std::vector<double>> p;
-    p.push_back({0,-153});
-    p.push_back({0.25,64});
-    p.push_back({0.5,242});
-    p.push_back({0.75,284});
-    p.push_back({1,175});
-
     /*
-    ajustePolinomial(2, p);*/
+    // EXEMPLO DE AJUSTES DE CURVAS
+
+    std::vector<std::vector<double>> pontos;
+    pontos.push_back({0,-153});
+    pontos.push_back({0.25,64});
+    pontos.push_back({0.5,242});
+    pontos.push_back({0.75,284});
+    pontos.push_back({1,175});
+
+    //ajustePolinomial(2, pontos);
 
     std::vector<double(*)(double)> funcs;
     funcs.push_back(f1);
     funcs.push_back(f2);
     
     std::vector<double> coeficientes;
-    ajusteLinearGeral(p,funcs,coeficientes);
+    ajusteLinearGeral(pontos,funcs,coeficientes);
     exibirVetor(coeficientes);
+    */
 
-    ajustePolinomial(2, p, coeficientes);
-    exibirVetor(coeficientes);
+    // INTERPOLAÇÃO POLINOMIAL
+    std::vector<std::vector<double>> p;
+    p.push_back({0,1});
+    p.push_back({1,6});
+    p.push_back({2,5});
+    p.push_back({3,-8});
 
-    /*
-    Matriz a;
-    a.linhas = 2;
-    a.colunas = 3;
-    a.elementos = {
-        {1,2,3},
-        {4,5,6}
-    };
-
-    Matriz r;
-    transporMatriz(a,r);*/
+    std::vector<double> r;
+    interpolPolinomial(p, r);
 
     return 0;
 }
