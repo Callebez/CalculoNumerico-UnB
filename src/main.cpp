@@ -24,6 +24,16 @@ double f3(double x)
     return sin(2*x);
 }
 
+double g1(double x)
+{
+    return sin(M_PI*x);
+}
+
+double g2(double x)
+{
+    return cos(M_PI*x);
+}
+
 int main()
 {
     /*
@@ -121,24 +131,23 @@ int main()
 
     // exibirMatriz(ver);*/
     
-    /*
-    // EXEMPLO DE AJUSTES DE CURVAS
+    // Ajuste Linear Geral - UFRGS - Página 199 - Exemplo 7.2.2
+    std::vector<std::vector<double>> t;
+    t.push_back({0.0, -153});
+    t.push_back({0.25, 64});
+    t.push_back({0.5, 242});
+    t.push_back({0.75, 284});
+    t.push_back({1, 175});
 
-    std::vector<std::vector<double>> pontos;
-    pontos.push_back({0,-153});
-    pontos.push_back({0.25,64});
-    pontos.push_back({0.5,242});
-    pontos.push_back({0.75,284});
-    pontos.push_back({1,175});
+    std::vector<double> coefsAL2;
+    std::vector<double(*)(double)> funcs2;
+    funcs2.push_back(g1);
+    funcs2.push_back(g2);
 
-    std::vector<double(*)(double)> funcs;
-    funcs.push_back(f1);
-    funcs.push_back(f2);
-    
-    std::vector<double> coeficientes;
-    ajusteLinearGeral(pontos,funcs,coeficientes);
-    exibirVetor(coeficientes);
-    */
+    ajusteLinearGeral(t,funcs2,coefsAL2);
+    std::cout<<"=> Coeficientes do Ajuste Linear Geral:\n";
+    exibirVetor(coefsAL2);
+    std::cout<<"\n";
 
     // Ajuste Linear Geral - Questão E.1
     std::vector<std::vector<double>> s;
