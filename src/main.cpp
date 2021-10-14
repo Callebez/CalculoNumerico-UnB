@@ -11,12 +11,17 @@ void fun(double& x, double& res)
 
 double f1(double x)
 {
-    return sin(M_PI*x);
+    return x*x;
 }
 
 double f2(double x)
 {
-    return cos(M_PI*x);
+    return pow(exp(1), x);
+}
+
+double f3(double x)
+{
+    return sin(2*x);
 }
 
 int main()
@@ -126,8 +131,6 @@ int main()
     pontos.push_back({0.75,284});
     pontos.push_back({1,175});
 
-    //ajustePolinomial(2, pontos);
-
     std::vector<double(*)(double)> funcs;
     funcs.push_back(f1);
     funcs.push_back(f2);
@@ -137,15 +140,60 @@ int main()
     exibirVetor(coeficientes);
     */
 
-    // INTERPOLAÇÃO POLINOMIAL
+    // Ajuste Linear Geral - Questão E.1
+    std::vector<std::vector<double>> s;
+    s.push_back({-2.14, 7.33});
+    s.push_back({-1.37, 3.91});
+    s.push_back({-1.07, 0.63});
+    s.push_back({-0.42, -0.05});
+    s.push_back({-0.08, 1.11});
+    s.push_back({0.41,2.93});
+    s.push_back({0.93,3.39});
+    s.push_back({1.41,2.92});
+    s.push_back({2.01,2.52});
+    s.push_back({2.32,3.85});
+    s.push_back({2.86,6.15});
+    s.push_back({3.43,11.66});
+    s.push_back({4.07,14.86});
+    s.push_back({4.54,17.89});
+
+    std::vector<double> coefsAL;
+    std::vector<double(*)(double)> funcs;
+    funcs.push_back(f1);
+    funcs.push_back(f2);
+    funcs.push_back(f3);
+
+    ajusteLinearGeral(s,funcs,coefsAL);
+    std::cout<<"=> Coeficientes do Ajuste Linear Geral:\n";
+    exibirVetor(coefsAL);
+
+    // Ajuste Polinomial - Questão A.1 - Lista 6
     std::vector<std::vector<double>> p;
-    p.push_back({0,1});
-    p.push_back({1,6});
-    p.push_back({2,5});
-    p.push_back({3,-8});
+    p.push_back({0.03,6.45});
+    p.push_back({0.42,6.35});
+    p.push_back({0.76,8.76});
+    p.push_back({0.68,10.06});
+    p.push_back({0.93,13.63});
+    p.push_back({1.21,27.37});
+    p.push_back({1.54,31.67});
+    p.push_back({1.41,41.29});
 
     std::vector<double> r;
-    interpolPolinomial(p, r);
+    ajustePolinomial(1,p,r);
+    //verificaPolinomio(r, p);
+
+    // Polinômio Interpolador - Questão C.1
+    std::vector<std::vector<double>> q;
+    q.push_back({0.0,1.3});
+    q.push_back({0.25,2.72});
+    q.push_back({0.5,4.98});
+    q.push_back({0.75,3.12});
+    q.push_back({1,1.37});
+
+    std::vector<double> coefs;
+    // Irá gerar um polinômio de grau q.size()-1
+    interpolPolinomial(q, coefs);
+    verificaPolinomio(coefs, q);
 
     return 0;
 }

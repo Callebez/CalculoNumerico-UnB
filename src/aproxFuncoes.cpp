@@ -18,9 +18,6 @@ void obterCoeficientes(std::vector<std::vector<double>> pontos, Matriz V, std::v
     std::vector<double> aux;
     multiplicaVetorMatrix(Vtrans, y, aux);
     multiplicaVetorMatrix(Minv, aux, res);
-
-    for(auto k:res)
-        std::cout<<k<<"\n";
 }
 
 void ajusteLinearGeral(std::vector<std::vector<double>> pontos, std::vector<double(*)(double)> funcoes, std::vector<double>& res)
@@ -64,6 +61,41 @@ void interpolPolinomial(std::vector<std::vector<double>> pontos, std::vector<dou
     inversa(V, Vinv);
 
     multiplicaVetorMatrix(Vinv, y, res);
+}
 
-    exibirVetor(res);
+/////////////////////////////////////////////////////
+void exibirPolinomio(std::vector<double> coeficientes)
+{
+    long long grau = 0;
+    for(auto coeficiente: coeficientes)
+        std::cout<< coeficiente << ".(x^" << grau << ") ", grau+=1;
+    std::cout<<"\n";
+}
+
+double calcularImagemPolinomio(std::vector<double> coeficientes, double x)
+{
+    long long grau = 0;
+    double imagem = 0;
+
+    for(auto coeficiente: coeficientes)
+        imagem += (coeficiente * pow(x, grau)), grau+=1;
+
+    return imagem;
+}
+
+void verificaPolinomio(std::vector<double> coeficientes, std::vector<std::vector<double>> pontos)
+{
+    std::cout<<"\n=> Polinômio Interpolador ou Polinômio do Ajuste: \n";
+        exibirPolinomio(coeficientes);
+    std::cout<<"\n";
+
+    std::cout<<"=> Pontos que foram definidos: \n";
+    for(auto ponto: pontos)
+        std::cout<<"("<<ponto[0]<<", "<<ponto[1]<<")\n";
+    std::cout<<"\n";
+
+    std::cout<<"=> Resultado obtido nas imagens com o Polinomio Interpolador ou Polinômio do Ajuste: \n";
+    for(auto ponto: pontos)
+        std::cout<<"\nCalculo da imagem do ponto "<< ponto[0]<<": "<<calcularImagemPolinomio(coeficientes, ponto[0]);
+    std::cout<<"\n";
 }

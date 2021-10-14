@@ -19,3 +19,8 @@ void ajusteLinearGeral(std::vector<std::vector<double>> pontos, std::vector<doub
 void ajustePolinomial(long long grau, std::vector<std::vector<double>> pontos, std::vector<double>& res);
 
 void interpolPolinomial(std::vector<std::vector<double>> pontos, std::vector<double>& res);
+
+// Ferramentas de Analise
+void exibirPolinomio(std::vector<double> coeficientes);
+double calcularImagemPolinomio(std::vector<double> coeficientes, double x);
+void verificaPolinomio(std::vector<double> coeficientes, std::vector<std::vector<double>> pontos);
