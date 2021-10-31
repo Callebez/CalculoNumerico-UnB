@@ -1,7 +1,7 @@
 #include "solSisLineares.hpp"
 #include "Matriz.hpp"
 #include "aproxFuncoes.hpp"
-
+#include "solEdos.hpp"
 #include <iostream>
 #include <vector>
 void fun(std::vector<double>& x, std::vector<double>& res)
@@ -35,22 +35,31 @@ double g2(double x)
 {
     return cos(M_PI*x);
 }
-
-int main()
+void testeEuler(double& t, double& x, double& y)
 {
-    std::vector<double> chuteinicial = {0.0,0.0,0.0};
-    // newtonRapshonSistemas(fun,chuteinicial,0.01,100);
-    // exibirVetor(chuteinicial);
-    Matriz A;
-    criarMatriz(A,3,3);
-    A.elementos = {{1.0,1.0,1.0}
-                   ,{ 1.0, 2.0, 2.0}
-                   ,{2.0,1.0,3.0}};
-    std::vector<double> res;
-    std::vector<double> b = {6.0,9.0,11.0 };
-    // gaussSidel(A,b,chuteinicial,res, 100,1e-5);
-    iteracaoSOR(A,b,chuteinicial,res,100,1e-5);
-    exibirVetor(res);
+    y = 2*x;
+}
+int main()    
+{
+    // ////////////////// TESTE METODO DE EULER//////////////////
+    // Matriz sol; 
+    // eulerSimples(testeEuler,1.0,0.2,0.0,6.0,sol);
+    // exibirMatriz(sol); 
+    // // Faça o pipe para um arquivo para testar! (make run >> arquivo.txt) e abra o gnuplot!
+
+    // std::vector<double> chuteinicial = {0.0,0.0,0.0};
+    // // newtonRapshonSistemas(fun,chuteinicial,0.01,100);
+    // // exibirVetor(chuteinicial);
+    // Matriz A;
+    // criarMatriz(A,3,3);
+    // A.elementos = {{1.0,1.0,1.0}
+    //                ,{ 1.0, 2.0, 2.0}
+    //                ,{2.0,1.0,3.0}};
+    // std::vector<double> res;
+    // std::vector<double> b = {6.0,9.0,11.0 };
+    // // gaussSidel(A,b,chuteinicial,res, 100,1e-5);
+    // iteracaoSOR(A,b,chuteinicial,res,100,1e-5);
+    // exibirVetor(res);
     // double Extra;
     // double ponto = 1.0;
     // double exato = -2.5;
@@ -162,77 +171,77 @@ int main()
     // exibirMatriz(ver);*/
     
     // Ajuste Linear Geral - UFRGS - Página 199 - Exemplo 7.2.2
-    std::vector<std::vector<double>> t;
-    t.push_back({0.0, -153});
-    t.push_back({0.25, 64});
-    t.push_back({0.5, 242});
-    t.push_back({0.75, 284});
-    t.push_back({1, 175});
+    // std::vector<std::vector<double>> t;
+    // t.push_back({0.0, -153});
+    // t.push_back({0.25, 64});
+    // t.push_back({0.5, 242});
+    // t.push_back({0.75, 284});
+    // t.push_back({1, 175});
 
-    std::vector<double> coefsAL2;
-    std::vector<double(*)(double)> funcs2;
-    funcs2.push_back(g1);
-    funcs2.push_back(g2);
+    // std::vector<double> coefsAL2;
+    // std::vector<double(*)(double)> funcs2;
+    // funcs2.push_back(g1);
+    // funcs2.push_back(g2);
 
-    ajusteLinearGeral(t,funcs2,coefsAL2);
-    std::cout<<"=> Coeficientes do Ajuste Linear Geral:\n";
-    exibirVetor(coefsAL2);
-    std::cout<<"\n";
+    // ajusteLinearGeral(t,funcs2,coefsAL2);
+    // std::cout<<"=> Coeficientes do Ajuste Linear Geral:\n";
+    // exibirVetor(coefsAL2);
+    // std::cout<<"\n";
 
-    // Ajuste Linear Geral - Questão E.1
-    std::vector<std::vector<double>> s;
-    s.push_back({-2.14, 7.33});
-    s.push_back({-1.37, 3.91});
-    s.push_back({-1.07, 0.63});
-    s.push_back({-0.42, -0.05});
-    s.push_back({-0.08, 1.11});
-    s.push_back({0.41,2.93});
-    s.push_back({0.93,3.39});
-    s.push_back({1.41,2.92});
-    s.push_back({2.01,2.52});
-    s.push_back({2.32,3.85});
-    s.push_back({2.86,6.15});
-    s.push_back({3.43,11.66});
-    s.push_back({4.07,14.86});
-    s.push_back({4.54,17.89});
+    // // Ajuste Linear Geral - Questão E.1
+    // std::vector<std::vector<double>> s;
+    // s.push_back({-2.14, 7.33});
+    // s.push_back({-1.37, 3.91});
+    // s.push_back({-1.07, 0.63});
+    // s.push_back({-0.42, -0.05});
+    // s.push_back({-0.08, 1.11});
+    // s.push_back({0.41,2.93});
+    // s.push_back({0.93,3.39});
+    // s.push_back({1.41,2.92});
+    // s.push_back({2.01,2.52});
+    // s.push_back({2.32,3.85});
+    // s.push_back({2.86,6.15});
+    // s.push_back({3.43,11.66});
+    // s.push_back({4.07,14.86});
+    // s.push_back({4.54,17.89});
 
-    std::vector<double> coefsAL;
-    std::vector<double(*)(double)> funcs;
-    funcs.push_back(f1);
-    funcs.push_back(f2);
-    funcs.push_back(f3);
+    // std::vector<double> coefsAL;
+    // std::vector<double(*)(double)> funcs;
+    // funcs.push_back(f1);
+    // funcs.push_back(f2);
+    // funcs.push_back(f3);
 
-    ajusteLinearGeral(s,funcs,coefsAL);
-    std::cout<<"=> Coeficientes do Ajuste Linear Geral:\n";
-    exibirVetor(coefsAL);
+    // ajusteLinearGeral(s,funcs,coefsAL);
+    // std::cout<<"=> Coeficientes do Ajuste Linear Geral:\n";
+    // exibirVetor(coefsAL);
 
-    // Ajuste Polinomial - Questão A.1 - Lista 6
-    std::vector<std::vector<double>> p;
-    p.push_back({0.03,6.45});
-    p.push_back({0.42,6.35});
-    p.push_back({0.76,8.76});
-    p.push_back({0.68,10.06});
-    p.push_back({0.93,13.63});
-    p.push_back({1.21,27.37});
-    p.push_back({1.54,31.67});
-    p.push_back({1.41,41.29});
+    // // Ajuste Polinomial - Questão A.1 - Lista 6
+    // std::vector<std::vector<double>> p;
+    // p.push_back({0.03,6.45});
+    // p.push_back({0.42,6.35});
+    // p.push_back({0.76,8.76});
+    // p.push_back({0.68,10.06});
+    // p.push_back({0.93,13.63});
+    // p.push_back({1.21,27.37});
+    // p.push_back({1.54,31.67});
+    // p.push_back({1.41,41.29});
 
-    std::vector<double> r;
-    ajustePolinomial(1,p,r);
-    //verificaPolinomio(r, p);
+    // std::vector<double> r;
+    // ajustePolinomial(1,p,r);
+    // //verificaPolinomio(r, p);
 
-    // Polinômio Interpolador - Questão C.1
-    std::vector<std::vector<double>> q;
-    q.push_back({0.0,1.3});
-    q.push_back({0.25,2.72});
-    q.push_back({0.5,4.98});
-    q.push_back({0.75,3.12});
-    q.push_back({1,1.37});
+    // // Polinômio Interpolador - Questão C.1
+    // std::vector<std::vector<double>> q;
+    // q.push_back({0.0,1.3});
+    // q.push_back({0.25,2.72});
+    // q.push_back({0.5,4.98});
+    // q.push_back({0.75,3.12});
+    // q.push_back({1,1.37});
 
-    std::vector<double> coefs;
-    // Irá gerar um polinômio de grau q.size()-1
-    interpolPolinomial(q, coefs);
-    verificaPolinomio(coefs, q);
+    // std::vector<double> coefs;
+    // // Irá gerar um polinômio de grau q.size()-1
+    // interpolPolinomial(q, coefs);
+    // verificaPolinomio(coefs, q);
 
     return 0;
 }
