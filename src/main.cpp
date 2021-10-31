@@ -2,23 +2,38 @@
 #include "Matriz.hpp"
 #include <iostream>
 #include <vector>
-void fun(double& x, double& res)
+void fun(std::vector<double>& x, std::vector<double>& res)
 {
-    res = sqrt(x)/pow(x,3.0);
+    res[0] = 3*x[0] - cos(x[1]*x[2])-1.0/2.0;
+    res[1] = x[0]*x[0] - 81.0*pow((x[1]+0.1),2) + sin(x[2]) + 1.06;
+    res[2] = exp(-x[0]*x[1])+20.0*x[2] - (3.0 -10.0*M_PI)/ 3.0;
 }
 int main()
 {
-    double Extra;
-    double ponto = 1.0;
-    double exato = -2.5;
-    double step = 0.25;
-    double derivadaNormal;
-    for( int i = 0; i < 1e5; i++)
-    {
-        extrapolacaoRichardsonDerivada(fun,ponto,step,2.0,Extra);
-    }
-    std::cout<<Extra<<std::endl;
-    std::cout<<"erro extrapolação:"<< fabs(Extra - exato)<<"\n";
+    std::vector<double> chuteinicial = {0.0,0.0,0.0};
+    // newtonRapshonSistemas(fun,chuteinicial,0.01,100);
+    // exibirVetor(chuteinicial);
+    Matriz A;
+    criarMatriz(A,3,3);
+    A.elementos = {{1.0,1.0,1.0}
+                   ,{ 1.0, 2.0, 2.0}
+                   ,{2.0,1.0,3.0}};
+    std::vector<double> res;
+    std::vector<double> b = {6.0,9.0,11.0 };
+    // gaussSidel(A,b,chuteinicial,res, 100,1e-5);
+    iteracaoSOR(A,b,chuteinicial,res,100,1e-5);
+    exibirVetor(res);
+    // double Extra;
+    // double ponto = 1.0;
+    // double exato = -2.5;
+    // double step = 0.25;
+    // double derivadaNormal;
+    // // for( int i = 0; i < 1e5; i++)
+    // // {
+    // //     extrapolacaoRichardsonDerivada(fun,ponto,step,2.0,Extra);
+    // // }
+    // // std::cout<<Extra<<std::endl;
+    // // std::cout<<"erro extrapolação:"<< fabs(Extra - exato)<<"\n";
 
     // for( int i = 0; i < 1e5; i++)
     //     derivada(fun,ponto,step/2.0,derivadaNormal);
@@ -36,10 +51,14 @@ int main()
     //     {-1,-4,1},
     //     {1,-2,-5}
     // };
+    // double raio;
+    // raioEspectral(A,raio);
+    // std::cout<<raio<<"\n";
     // std::vector<double> chuteinicial = {1,0,1};
     // std::vector<double> resultado;
     // std::vector<double>b = {2.0,-10.0,10.0};
-    // gaussSidel(A,b,chuteinicial,resultado);
+    
+    // gaussSidel(A,b,chuteinicial,resultado,500,1e-3);
     // exibirVetor(resultado);
     // std::vector<double> X;
     // multiplicaVetorMatrix(A,resultado,X);
