@@ -31,5 +31,7 @@ void exibirVetor(std::vector<double>& vec);
 void substraiVetores(std::vector<double>& A, std::vector<double>& B, std::vector<double>& resultado);
 void somaVetores(std::vector<double>& A, std::vector<double>& B, std::vector<double>& resultado);
 void multiplicarMatrizNumero(Matriz& matriz, double numero, Matriz& res);
+void multiplicarMatrizNumero(Matriz& matriz, double numero);
+void multiplicarVetorNumero(std::vector<double>& vec, double numero);
 void multiplicarVetorNumero(std::vector<double>& vec, double numero, std::vector<double>& res);
 

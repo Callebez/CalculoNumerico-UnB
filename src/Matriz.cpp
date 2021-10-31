@@ -119,6 +119,17 @@ void somaMatrizes(Matriz& A, Matriz& B, Matriz& resultado)
         }
     }
 }
+void multiplicarMatrizNumero(Matriz& matriz, double numero)
+{
+    
+    for(uint i = 0; i < matriz.linhas; i++)
+    {
+        for(uint j = 0; j < matriz.colunas; j++)
+        {
+            matriz.elementos[i][j] = numero*matriz.elementos[i][j];
+        }
+    }
+}
 void multiplicarMatrizNumero(Matriz& matriz, double numero, Matriz& res)
 {
     criarMatriz(res,matriz.linhas,matriz.colunas);
@@ -130,8 +141,16 @@ void multiplicarMatrizNumero(Matriz& matriz, double numero, Matriz& res)
         }
     }
 }
+void multiplicarVetorNumero(std::vector<double>& vec, double numero)
+{
+    for(uint j = 0; j < vec.size(); j++)
+    {
+        vec[j] = numero*vec[j];
+    }
+}
 void multiplicarVetorNumero(std::vector<double>& vec, double numero, std::vector<double>& res)
 {
+    res.resize(vec.size());
     for(uint j = 0; j < vec.size(); j++)
     {
         res[j] = numero*vec[j];

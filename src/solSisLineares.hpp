@@ -62,8 +62,13 @@ void decompoiscaoLDU(Matriz& A, Matriz& L,Matriz& D,Matriz& U);
 void criarMatrizIteracaoGaussSidel(Matriz& A, std::vector<double>& b, 
                                    Matriz&matrizIteracao, std::vector<double>& vetorIteracao);
 void gaussSidel(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInicial,
-                std::vector<double>& resultado);
+                std::vector<double>& resultado, uint maxIteracoes, double tol);
+void iteracaoSOR(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInicial,
+                std::vector<double>& resultado, uint maxIteracoes, double tol);
+void criarMatrizIteracaoSOR(Matriz& A, std::vector<double>& b, 
+                            Matriz&matrizIteracao, std::vector<double>& vetorIteracao);
 void raioEspectral(Matriz& A, double& raio);
 
 void extrapolacaoRichardsonDerivada(void(*funcao)(double&, double&), double& ponto,
                                     double step, double t, double& derivadaNoPonto);
+void normaEuclidianaResiduo(Matriz& A, std::vector<double>& b, std::vector<double>& x, double& norma);

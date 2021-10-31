@@ -161,9 +161,15 @@ void newtonRapshonSistemas(void(*funcao)(std::vector<double>&,std::vector<double
     std::vector<double> F(chuteInicial.size());
     Matriz Jinversa; 
     std::vector<double> delta(chuteInicial.size());
+    // std::vector<double> aux = chuteInicial;
+    double erro = 1; 
     double det;
-    for(uint i = 0; i < maxIteracoes; i++)
+    uint i = 0;
+    while((i < maxIteracoes)&(erro >= 1e-5))
+    // for(uint i = 0; i < maxIteracoes; i++)
     {
+        
+        aux = chuteInicial;
         jacobiano(funcao, chuteInicial,step,chuteInicial.size(),J);
         // inversa(J,Jinversa);
         funcao(chuteInicial,F);
@@ -175,6 +181,13 @@ void newtonRapshonSistemas(void(*funcao)(std::vector<double>&,std::vector<double
 
         // multiplicaVetorMatrix(Jinversa,F, aux);
         substraiVetores(chuteInicial,delta,chuteInicial);
+
+        substraiVetores(aux,chuteInicial,aux);
+        normaVetor(aux, erro);
+        i++;
+
+        std::cout<<i<<", erro:"<< erro <<"\n";
+
     }
 }
 // Metodo de Newton Raphson para função bem comportada de R -> R 
@@ -650,20 +663,99 @@ void criarMatrizIteracaoGaussSidel(Matriz& A, std::vector<double>& b,
     //Achar C_g
     multiplicaVetorMatrix(Aux,b,vetorIteracao);
 }
-void gaussSidel(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInicial,std::vector<double>& resultado)
+void gaussSidel(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInicial,
+                std::vector<double>& resultado, uint maxIteracoes, double tol)
 {
     resultado.resize(b.size());
     Matriz matrizIteracao;
     std::vector<double> vetorIteracao;
     criarMatrizIteracaoGaussSidel(A,b,matrizIteracao,vetorIteracao);
-    for(uint i = 0; i < 100; i++)
+    double erro = 1;
+    uint i = 0;
+    std::vector<double> aux = chuteInicial;
+    while((i<= maxIteracoes)&(erro >= tol))
+    {
+        aux = resultado;
+        multiplicaVetorMatrix(matrizIteracao,chuteInicial,resultado);
+        somaVetores(resultado,vetorIteracao, resultado);
+
+        substraiVetores(aux,resultado,aux);
+        normaVetor(aux, erro);
+        // normaEuclidianaResiduo(matrizIteracao,vetorIteracao,resultado, erro);
+        // std::cout<<erro<<"\n";
+        chuteInicial= resultado;
+        std::cout<<i<<", erro:"<< erro <<"\n";
+        exibirVetor(resultado);
+        std::cout<<"\n";
+
+        i++;
+    }
+}
+void criarMatrizIteracaoSOR(Matriz& A, std::vector<double>& b, 
+                            Matriz&matrizIteracao, std::vector<double>& vetorIteracao)
+{
+    double omega = 0.5;
+    Matriz L,D,U; 
+    Matriz Aux;
+    Matriz AuxMult;
+    Matriz Aux2; 
+    Matriz Aux3;
+    vetorIteracao.resize(b.size());
+
+    // Achar T_g
+
+    decompoiscaoLDU(A,L,D,U); 
+    multiplicarMatrizNumero(L,omega);
+    somaMatrizes(L,D, matrizIteracao);
+    inversa(matrizIteracao,Aux);
+    multiplicarMatrizNumero(D,(1.0-omega));
+    multiplicarMatrizNumero(U,(-omega));
+    somaMatrizes(D,U,Aux3);
+    multiplicaMatrizes(Aux,Aux3,AuxMult);
+ 
+    matrizIteracao = AuxMult;
+    
+    //Achar C_g
+    multiplicaVetorMatrix(Aux,b,vetorIteracao);
+    multiplicarVetorNumero(vetorIteracao,omega);
+}
+void iteracaoSOR(Matriz& A, std::vector<double>&b, std::vector<double>& chuteInicial,
+                std::vector<double>& resultado, uint maxIteracoes, double tol)
+{
+    resultado.resize(b.size());
+    Matriz matrizIteracao;
+    std::vector<double> vetorIteracao;
+    criarMatrizIteracaoSOR(A,b,matrizIteracao,vetorIteracao);
+    double erro = 1;
+    uint i = 0;
+    std::vector<double> aux = chuteInicial;
+    while((i<= maxIteracoes)&(erro >= tol))
     {
         multiplicaVetorMatrix(matrizIteracao,chuteInicial,resultado);
         somaVetores(resultado,vetorIteracao, resultado);
-        chuteInicial= resultado;
-    }
-}
 
+        substraiVetores(aux,resultado,aux);
+        normaVetor(aux, erro);
+        // normaEuclidianaResiduo(matrizIteracao,vetorIteracao,resultado, erro);
+        // std::cout<<erro<<"\n";
+        chuteInicial= resultado;
+        std::cout<<i<<", erro:"<< erro <<"\n";
+        exibirVetor(resultado);
+        std::cout<<"\n";
+        i++;
+
+    }
+    std::cout<<i<<"\n";
+}
+void normaEuclidianaResiduo(Matriz& A, std::vector<double>& b, std::vector<double>& x, double& norma)
+{
+    std::vector<double> aux (x.size());
+    std::vector<double> aux2 (x.size());
+
+    multiplicaVetorMatrix(A, x,aux);
+    substraiVetores(b,aux, aux2);
+    normaVetor(aux2, norma);
+}
 void raioEspectral(Matriz& A, double& raio)
 {
     std::vector<double> aux (A.colunas);
