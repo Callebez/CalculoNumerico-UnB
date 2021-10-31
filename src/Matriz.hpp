@@ -35,3 +35,4 @@ void multiplicarMatrizNumero(Matriz& matriz, double numero);
 void multiplicarVetorNumero(std::vector<double>& vec, double numero);
 void multiplicarVetorNumero(std::vector<double>& vec, double numero, std::vector<double>& res);
 
+void transporMatriz(Matriz& matriz, Matriz& res);

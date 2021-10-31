@@ -156,3 +156,12 @@ void multiplicarVetorNumero(std::vector<double>& vec, double numero, std::vector
         res[j] = numero*vec[j];
     }
 }
+
+void transporMatriz(Matriz& matriz, Matriz& res)
+{
+    criarMatriz(res, matriz.colunas, matriz.linhas);
+
+    for(long long unsigned i=0;i<res.linhas;++i)
+        for(long long unsigned j=0;j<res.colunas;++j)
+            res.elementos[i][j] = matriz.elementos[j][i];
+}

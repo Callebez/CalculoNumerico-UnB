@@ -1,6 +1,6 @@
 
 target 	:= main 
-objs 	:=  ./build/main.o ./build/solSisLineares.o ./build/Matriz.o
+objs 	:=  ./build/main.o ./build/solSisLineares.o ./build/Matriz.o ./build/aproxFuncoes.o
 CC 		:= g++
 CFLAGS 	:= -g -Wall -lm -pthread
 

@@ -1,7 +1,5 @@
 #include"solSisLineares.hpp"
-#include "Matriz.hpp"
-#include <algorithm>
-#include<thread>
+
 //==========================================================================
 //|                   S O L U Ç Õ E S - A L G É B R I C A S                |
 //==========================================================================
