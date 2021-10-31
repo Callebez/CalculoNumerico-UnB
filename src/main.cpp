@@ -46,6 +46,12 @@ int main()
     // eulerSimples(testeEuler,1.0,0.2,0.0,6.0,sol);
     // exibirMatriz(sol); 
     // // Faça o pipe para um arquivo para testar! (make run >> arquivo.txt) e abra o gnuplot!
+   
+    // ////////////////// TESTE METODO DE EULER MELHORADO//////////////////
+    Matriz sol; 
+    eulerMelhorado(testeEuler,1.0,0.2,0.0,6.0,sol);
+    exibirMatriz(sol); 
+    // // Faça o pipe para um arquivo para testar! (make run >> arquivo.txt) e abra o gnuplot!
 
     // std::vector<double> chuteinicial = {0.0,0.0,0.0};
     // // newtonRapshonSistemas(fun,chuteinicial,0.01,100);
