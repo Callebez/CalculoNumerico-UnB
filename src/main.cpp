@@ -2,6 +2,7 @@
 #include "Matriz.hpp"
 #include "aproxFuncoes.hpp"
 #include "solEdos.hpp"
+#include "metIntegra.hpp"
 #include <iostream>
 #include <vector>
 void fun(std::vector<double>& x, std::vector<double>& res)
@@ -39,6 +40,13 @@ void testeEuler(double& t, double& x, double& y)
 {
     y = 2*x;
 }
+
+// FUNÇÕES TESTES PARA MÉTODOS DE INTEGRAÇÃO
+void f1Integra(double& x, double& y)
+{
+    y=exp(-pow(x,2));
+}
+
 int main()    
 {
     // ////////////////// TESTE METODO DE EULER//////////////////
@@ -48,9 +56,9 @@ int main()
     // // Faça o pipe para um arquivo para testar! (make run >> arquivo.txt) e abra o gnuplot!
    
     // ////////////////// TESTE METODO DE EULER MELHORADO//////////////////
-    Matriz sol; 
-    eulerMelhorado(testeEuler,1.0,0.2,0.0,6.0,sol);
-    exibirMatriz(sol); 
+    // Matriz sol; 
+    // eulerMelhorado(testeEuler,1.0,0.2,0.0,6.0,sol);
+    // exibirMatriz(sol); 
     // // Faça o pipe para um arquivo para testar! (make run >> arquivo.txt) e abra o gnuplot!
 
     // std::vector<double> chuteinicial = {0.0,0.0,0.0};
@@ -248,6 +256,11 @@ int main()
     // // Irá gerar um polinômio de grau q.size()-1
     // interpolPolinomial(q, coefs);
     // verificaPolinomio(coefs, q);
+
+    // ////////////////// TESTE REGRA DO TRAPEZIO//////////////////
+
+    // Limites de integração [0,1], número de subintervalos 4
+    std::cout<<regraTrapezio(f1Integra, 0, 1, 4)<<"\n";
 
     return 0;
 }
