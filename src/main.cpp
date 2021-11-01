@@ -261,6 +261,9 @@ int main()
 
     // Limites de integração [0,1], número de subintervalos 4
     std::cout<<regraTrapezio(f1Integra, 0, 1, 4)<<"\n";
+    
+    // Limites de integração [0,1], número de subintervalos 2
+    std::cout<<regraSimpson(f1Integra, 0, 1, 2)<<"\n";
 
     return 0;
 }
