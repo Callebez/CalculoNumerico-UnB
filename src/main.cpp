@@ -29,12 +29,12 @@ double f3(double x)
 
 double g1(double x)
 {
-    return sin(M_PI*x);
+    return x;
 }
 
 double g2(double x)
 {
-    return cos(M_PI*x);
+    return 1;
 }
 void testeEuler(double& t, double& x, double& y)
 {
@@ -45,6 +45,11 @@ void testeEuler(double& t, double& x, double& y)
 void f1Integra(double& x, double& y)
 {
     y=exp(-pow(x,2));
+}
+
+void f2Integra(double& x, double& y)
+{
+    y = 1.0/(pow(x,4)+5);
 }
 
 int main()    
@@ -260,18 +265,23 @@ int main()
     // ////////////////// TESTE REGRA DE INTEGRAÇÃO //////////////////
 
     // Limites de integração [0,1], número de subintervalos 4
-    std::cout<<regraTrapezio(f1Integra, 0, 1, 4)<<"\n";
-    
+    //std::cout<<regraTrapezio(f2Integra, -1, 1, 1000)<<"\n";
+    /*
     // Limites de integração [0,1], número de subintervalos 2
-    std::cout<<regraSimpson(f1Integra, 0, 1, 2)<<"\n";
+    //std::cout<<regraSimpson(f2Integra, 0, 3, 6)<<"\n";*/
 
+    
     // Regra da Quadratura
-    std::cout<<regraQuadratura(f1Integra, 0, 1, {0,1.0/2.0,1.0})<<"\n";
-
+    //std::cout<<std::setprecision(30);
+    //std::cout<<regraQuadratura(f2Integra, -1, 1, {0,0.5,1.0,1.5})<<"\n";
+/*
     // Teste de Polinomio de Lagrange
     std::cout << "\nCalculo do polinomio de Lagrange: " <<calculaPolinomioLagrange(10, {{0,0},{1,1},{2,4},{3,9}}) <<"\n";
     exibirPolinomioLagrange({{0,0},{1,1},{2,4},{3,9}});
-    exibirTermosLagrange({0,1,2,3});
+    exibirTermosLagrange({0,1,2,3});*/
+
+
+    
 
     return 0;
 }
