@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include <iomanip>
 
+#include "Matriz.hpp"
+#include "solSisLineares.hpp"
+
 #pragma once
 
 // Realiza o calculo direto de uma regra do trapezio, subdividindo em intervalos.
@@ -16,3 +19,6 @@
 double regraTrapezio(void(*funcao)(double&, double&), double inicioInter, double fimInter, double numeroSubintervalos=1);
 
 double regraSimpson(void(*funcao)(double&, double&), double inicioInter, double fimInter, double numeroSubintervalos=1);
+
+double regraQuadratura(void(*funcao)(double&, double&), double inicioInter, double fimInter, 
+    std::vector<double> pontos);

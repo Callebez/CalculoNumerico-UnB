@@ -38,3 +38,38 @@ double regraSimpson(void(*funcao)(double&, double&), double inicioInter, double 
 
     return resultadoIntegral;
 }
+
+double regraQuadratura(void(*funcao)(double&, double&), double inicioInter, double fimInter, 
+    std::vector<double> pontos)
+{
+    // Aw=B
+    // Neste caso A refere-se a matriz dos polinômios.
+    // B a matriz composta por as variações do intervalo
+
+    Matriz A;
+    criarMatriz(A, pontos.size(), pontos.size());
+
+    for(long long unsigned i=0;i<A.linhas;++i)
+        for(long long unsigned j=0;j<A.colunas;++j)
+            A.elementos[i][j]=(i==0?1:pow(pontos[j],i));
+
+    Matriz Ainv;
+    inversa(A, Ainv);
+
+    std::vector<double> coefs;
+    for(long long unsigned i=1;i<=pontos.size();++i)
+        coefs.push_back((pow(fimInter, i)-pow(inicioInter, i))/i);
+
+    std::vector<double> wCoefs;
+    multiplicaVetorMatrix(Ainv, coefs, wCoefs);
+
+    double resultado = 0;
+    for(long long unsigned i=0; i<pontos.size();++i)
+    {
+        double imagem;
+        funcao(pontos[i], imagem);
+        resultado += wCoefs[i]*imagem;
+    }
+
+    return resultado;
+}

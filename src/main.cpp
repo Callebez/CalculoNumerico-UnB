@@ -257,13 +257,16 @@ int main()
     // interpolPolinomial(q, coefs);
     // verificaPolinomio(coefs, q);
 
-    // ////////////////// TESTE REGRA DO TRAPEZIO//////////////////
+    // ////////////////// TESTE REGRA DE INTEGRAÇÃO //////////////////
 
     // Limites de integração [0,1], número de subintervalos 4
     std::cout<<regraTrapezio(f1Integra, 0, 1, 4)<<"\n";
     
     // Limites de integração [0,1], número de subintervalos 2
     std::cout<<regraSimpson(f1Integra, 0, 1, 2)<<"\n";
+
+    // Regra da Quadratura
+    std::cout<<regraQuadratura(f1Integra, 0, 1, {0,1.0/2.0,1.0})<<"\n";
 
     return 0;
 }
