@@ -63,6 +63,75 @@ void interpolPolinomial(std::vector<std::vector<double>> pontos, std::vector<dou
     multiplicaVetorMatrix(Vinv, y, res);
 }
 
+// Polinômios de Lagrange
+double termoLagrange(double x, std::vector<double> pontos, uint termo)
+{
+    double resultado = 0;
+
+    for(uint i = 0; i<pontos.size();++i)
+    {
+        if(i!=termo)
+        {
+            if(resultado == 0)
+                resultado = (x-pontos[i])/(pontos[termo]-pontos[i]);
+            else
+                resultado *= (x-pontos[i])/(pontos[termo]-pontos[i]);
+        }
+    }
+
+    return resultado;
+}
+
+double calculaPolinomioLagrange(double x, std::vector<std::vector<double>> pontos)
+{
+    std::vector<double> dominio;
+    std::vector<double> imagem;
+    for(auto i: pontos)
+    {
+        dominio.push_back(i[0]);
+        imagem.push_back(i[1]);
+    }
+
+    double resultado = 0;
+    for(uint i=0;i<pontos.size();++i)
+        resultado += imagem[i]*termoLagrange(x, dominio, i);
+
+    return resultado;
+}
+
+void exibirPolinomioLagrange(std::vector<std::vector<double>> pontos)
+{
+    std::vector<double> dominio;
+    std::vector<double> imagem;
+    for(auto i: pontos)
+    {
+        dominio.push_back(i[0]);
+        imagem.push_back(i[1]);
+    }
+
+    std::cout<<"\nDominio Passado:  ";
+    for(auto i: dominio)
+        std::cout<<i<<" ";
+
+    std::cout<<"\nP(x)=";
+    for(uint i=0;i<pontos.size();++i)
+        std::cout<<"+ "<<imagem[i]<<".L"<<(i+1)<<"(x).x ";
+    std::cout<<"\n\n";
+}
+
+void exibirTermosLagrange(std::vector<double> dominio)
+{
+    for(uint i=0;i<dominio.size();++i)
+    {
+        std::cout<<"L"<<i+1<<"(x)=";
+        for(uint j=0;j<dominio.size();++j)
+            if(i!=j)
+                std::cout<<"[(x-"<<dominio[j]<<")/("<<dominio[i]<<"-"<<dominio[j]<<")] ";
+        std::cout<<"\n";
+    }
+    std::cout<<"\n";
+}
+
 /////////////////////////////////////////////////////
 void exibirPolinomio(std::vector<double> coeficientes)
 {

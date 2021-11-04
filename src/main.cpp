@@ -268,5 +268,10 @@ int main()
     // Regra da Quadratura
     std::cout<<regraQuadratura(f1Integra, 0, 1, {0,1.0/2.0,1.0})<<"\n";
 
+    // Teste de Polinomio de Lagrange
+    std::cout << "\nCalculo do polinomio de Lagrange: " <<calculaPolinomioLagrange(10, {{0,0},{1,1},{2,4},{3,9}}) <<"\n";
+    exibirPolinomioLagrange({{0,0},{1,1},{2,4},{3,9}});
+    exibirTermosLagrange({0,1,2,3});
+
     return 0;
 }

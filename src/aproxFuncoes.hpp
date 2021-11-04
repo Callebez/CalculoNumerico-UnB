@@ -20,6 +20,12 @@ void ajustePolinomial(long long grau, std::vector<std::vector<double>> pontos, s
 
 void interpolPolinomial(std::vector<std::vector<double>> pontos, std::vector<double>& res);
 
+// Polinômios de Lagrange
+double termoLagrange(double x, std::vector<double> pontos, uint termo);
+double calculaPolinomioLagrange(double x, std::vector<std::vector<double>> pontos);
+void exibirPolinomioLagrange(std::vector<std::vector<double>> pontos);
+void exibirTermosLagrange(std::vector<double> dominio);
+
 // Ferramentas de Analise
 void exibirPolinomio(std::vector<double> coeficientes);
 double calcularImagemPolinomio(std::vector<double> coeficientes, double x);
